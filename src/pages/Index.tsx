@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -121,6 +120,30 @@ const Index = () => {
       rating: 5,
       company: "Creative Solutions",
       image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      text: "The mobile developers from Kombee helped us launch our app 6 weeks ahead of schedule. Their expertise in React Native and Flutter was exactly what we needed. The code quality was exceptional and they handled all the complex integrations flawlessly.",
+      author: "David Park",
+      role: "Founder at MobileFirst",
+      rating: 5,
+      company: "MobileFirst",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      text: "Working with Kombee's QA engineers transformed our testing process. They implemented comprehensive automation that caught bugs we never would have found. Our product quality improved dramatically and customer complaints dropped by 80%.",
+      author: "Lisa Wang",
+      role: "VP of Engineering at DataCorp",
+      rating: 5,
+      company: "DataCorp",
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      text: "The project managers from Kombee brought structure to our chaotic development process. They implemented Agile methodologies that improved our delivery speed by 150%. Communication became crystal clear and stakeholders were always informed.",
+      author: "James Mitchell",
+      role: "CEO at StartupVenture",
+      rating: 5,
+      company: "StartupVenture",
+      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
     }
   ];
 
@@ -519,7 +542,12 @@ const Index = () => {
                               </p>
                               <div className="flex flex-wrap gap-2">
                                 {role.skills.map((skill, skillIndex) => (
-                                  <Badge key={skillIndex} variant="outline" className="text-xs" style={{ borderColor: '#d8cdce', color: '#d8cdce' }}>
+                                  <Badge key={skillIndex} variant="outline" className="text-xs" style={{ 
+                                    borderColor: '#d8cdce', 
+                                    color: '#d8cdce',
+                                    fontFamily: 'Calibre, sans-serif',
+                                    fontWeight: '100'
+                                  }}>
                                     {skill}
                                   </Badge>
                                 ))}
@@ -753,7 +781,7 @@ const Index = () => {
             <div className="overflow-hidden">
               <motion.div
                 className="flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${currentTestimonial * 33.333}%)` }}
+                style={{ transform: `translateX(-${currentTestimonial * (100 / 3)}%)` }}
               >
                 {testimonials.map((testimonial, index) => (
                   <motion.div
