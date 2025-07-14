@@ -144,6 +144,22 @@ const Index = () => {
       rating: 5,
       company: "StartupVenture",
       image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      text: "Kombee's data scientists helped us unlock insights from our customer data that we never knew existed. Their machine learning models increased our conversion rates by 40%. The team was professional, responsive, and delivered beyond our expectations.",
+      author: "Rachel Kim",
+      role: "Head of Analytics at DataDriven",
+      rating: 5,
+      company: "DataDriven",
+      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      text: "The DevOps engineers from Kombee revolutionized our deployment pipeline. They reduced our deployment time from hours to minutes and implemented monitoring that prevented three major outages. Our system reliability improved by 99.9%.",
+      author: "Alex Thompson",
+      role: "Infrastructure Lead at CloudTech",
+      rating: 5,
+      company: "CloudTech",
+      image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
     }
   ];
 
@@ -241,6 +257,16 @@ const Index = () => {
       slides.push(roles.slice(i, i + 4));
     }
     return slides;
+  };
+
+  // Get cards per slide based on screen size
+  const getCardsPerSlide = () => {
+    if (typeof window !== 'undefined') {
+      if (window.innerWidth < 768) return 1; // Mobile: 1 card
+      if (window.innerWidth < 1024) return 2; // Tablet: 2 cards
+      return 3; // Desktop: 3 cards
+    }
+    return 3;
   };
 
   return (
@@ -364,48 +390,48 @@ const Index = () => {
       </section>
 
       {/* Challenges Section */}
-      <section id="challenges" className="py-32 lg:py-40" style={{ backgroundColor: '#171311' }}>
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="challenges" className="py-20 sm:py-32 lg:py-40" style={{ backgroundColor: '#171311' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           {/* Section Header */}
           <motion.div
-            className="text-center mb-32"
+            className="text-center mb-20 sm:mb-32"
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="mb-8 leading-tight tracking-tight" 
+            <h2 className="mb-6 sm:mb-8 leading-tight tracking-tight" 
                 style={{ 
-                  fontSize: 'clamp(3rem, 8vw, 4.5rem)',
+                  fontSize: 'clamp(2rem, 6vw, 4.5rem)',
                   fontFamily: 'Inter, sans-serif', 
                   fontWeight: '900',
                   color: '#d8cdce' 
                 }}>
               Flexible Tech Hiring
             </h2>
-            <p className="mb-6 leading-tight tracking-tight" 
+            <p className="mb-4 sm:mb-6 leading-tight tracking-tight" 
                style={{ 
-                 fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+                 fontSize: 'clamp(1.8rem, 5vw, 3.5rem)',
                  fontFamily: 'Inter, sans-serif', 
                  fontWeight: '900',
                  color: '#d8cdce' 
                }}>
               Delivery Pods
             </p>
-            <p className="mb-12 leading-tight tracking-tight" 
+            <p className="mb-8 sm:mb-12 leading-tight tracking-tight" 
                style={{ 
-                 fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+                 fontSize: 'clamp(1.8rem, 5vw, 3.5rem)',
                  fontFamily: 'Inter, sans-serif', 
                  fontWeight: '900',
                  color: '#d8cdce' 
                }}>
               Plug-and-Play Talent
             </p>
-            <div className="w-32 h-1.5 mx-auto rounded-full" style={{ backgroundColor: '#d8cdce' }}></div>
+            <div className="w-24 sm:w-32 h-1.5 mx-auto rounded-full" style={{ backgroundColor: '#d8cdce' }}></div>
           </motion.div>
 
           {/* Challenges Grid */}
-          <div className="space-y-32">
+          <div className="space-y-20 sm:space-y-32">
             {challenges.map((challenge, index) => (
               <motion.div
                 key={index}
@@ -414,15 +440,15 @@ const Index = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
                 viewport={{ once: true, margin: "-20%" }}
-                className={`grid lg:grid-cols-2 gap-20 items-center ${
+                className={`grid lg:grid-cols-2 gap-12 sm:gap-20 items-center ${
                   index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
                 }`}
               >
-                <div className={`space-y-8 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                <div className={`space-y-6 sm:space-y-8 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
                   <div>
-                    <h3 className="mb-6 tracking-tight" 
+                    <h3 className="mb-4 sm:mb-6 tracking-tight" 
                         style={{ 
-                          fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+                          fontSize: 'clamp(1.8rem, 5vw, 3.5rem)',
                           fontFamily: 'Inter, sans-serif', 
                           fontWeight: '900',
                           color: '#d8cdce' 
@@ -431,7 +457,7 @@ const Index = () => {
                     </h3>
                     <p className="leading-relaxed tracking-tight" 
                        style={{ 
-                         fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+                         fontSize: 'clamp(1.2rem, 3vw, 2rem)',
                          fontFamily: 'Calibre, sans-serif', 
                          fontWeight: '100',
                          color: '#d8cdce' 
@@ -442,7 +468,7 @@ const Index = () => {
                 </div>
                 <div className={`relative ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
                   <motion.div 
-                    className="aspect-square rounded-3xl overflow-hidden"
+                    className="aspect-square rounded-2xl sm:rounded-3xl overflow-hidden"
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                   >
@@ -459,19 +485,19 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Roles Section with Carousel */}
-      <section id="roles" className="section-padding" style={{ backgroundColor: '#d8cdce' }}>
-        <div className="max-w-7xl mx-auto px-6">
+      {/* Roles Section with Carousel - Enhanced Mobile View */}
+      <section id="roles" className="py-20 sm:py-32 lg:py-40" style={{ backgroundColor: '#d8cdce' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div
-            className="text-center mb-20"
+            className="text-center mb-16 sm:mb-20"
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="mb-6" 
+            <h2 className="mb-4 sm:mb-6" 
                 style={{ 
-                  fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+                  fontSize: 'clamp(2rem, 5vw, 3.5rem)',
                   fontFamily: 'Inter, sans-serif',
                   fontWeight: '900',
                   color: '#24180e'
@@ -479,7 +505,7 @@ const Index = () => {
               Top-Tier Tech Talent Available On Demand
             </h2>
             <p style={{ 
-                 fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+                 fontSize: 'clamp(1.2rem, 3vw, 2rem)',
                  fontFamily: 'Inter, sans-serif',
                  fontWeight: '900',
                  color: '#24180e'
@@ -497,7 +523,7 @@ const Index = () => {
               >
                 {getRoleSlides().map((slideRoles, slideIndex) => (
                   <div key={slideIndex} className="w-full flex-shrink-0">
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                       {slideRoles.map((role, index) => (
                         <motion.div
                           key={index}
@@ -516,16 +542,16 @@ const Index = () => {
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                               />
                             </div>
-                            <CardContent className="p-6">
-                              <div className="flex items-center justify-between mb-6">
+                            <CardContent className="p-4 sm:p-6">
+                              <div className="flex items-center justify-between mb-4 sm:mb-6">
                                 <div className="group-hover:scale-110 transition-transform duration-300" style={{ color: '#d8cdce' }}>
                                   {role.icon}
                                 </div>
-                                <Badge variant="secondary" className="font-semibold" style={{ backgroundColor: '#d8cdce', color: '#24180e' }}>
+                                <Badge variant="secondary" className="font-semibold text-xs sm:text-sm" style={{ backgroundColor: '#d8cdce', color: '#24180e' }}>
                                   {role.experience}
                                 </Badge>
                               </div>
-                              <h3 className="text-lg mb-4 group-hover:text-primary transition-colors" 
+                              <h3 className="text-base sm:text-lg mb-3 sm:mb-4 group-hover:text-primary transition-colors" 
                                   style={{ 
                                     fontFamily: 'Inter, sans-serif',
                                     fontWeight: '900',
@@ -533,14 +559,14 @@ const Index = () => {
                                   }}>
                                 {role.title}
                               </h3>
-                              <p className="mb-6 text-sm leading-relaxed" style={{ 
+                              <p className="mb-4 sm:mb-6 text-xs sm:text-sm leading-relaxed" style={{ 
                                    fontFamily: 'Calibre, sans-serif',
                                    fontWeight: '100',
                                    color: '#d8cdce'
                                  }}>
                                 {role.description}
                               </p>
-                              <div className="flex flex-wrap gap-2">
+                              <div className="flex flex-wrap gap-1.5 sm:gap-2">
                                 {role.skills.map((skill, skillIndex) => (
                                   <Badge key={skillIndex} variant="outline" className="text-xs" style={{ 
                                     borderColor: '#d8cdce', 
@@ -563,15 +589,15 @@ const Index = () => {
             </div>
 
             {/* Carousel Navigation */}
-            <div className="flex justify-center items-center mt-8 space-x-4">
+            <div className="flex justify-center items-center mt-6 sm:mt-8 space-x-4">
               <Button
                 variant="outline"
                 size="lg"
                 onClick={prevRole}
-                className="p-3 rounded-full"
+                className="p-2 sm:p-3 rounded-full"
                 style={{ borderColor: '#24180e', color: '#24180e', backgroundColor: 'transparent' }}
               >
-                <ChevronLeft className="h-5 w-5" />
+                <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
               
               {/* Dots Indicator */}
@@ -579,7 +605,7 @@ const Index = () => {
                 {getRoleSlides().map((_, index) => (
                   <button
                     key={index}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
                       currentRoleSlide === index 
                         ? 'scale-125' 
                         : 'hover:opacity-70'
@@ -596,10 +622,10 @@ const Index = () => {
                 variant="outline"
                 size="lg"
                 onClick={nextRole}
-                className="p-3 rounded-full"
+                className="p-2 sm:p-3 rounded-full"
                 style={{ borderColor: '#24180e', color: '#24180e', backgroundColor: 'transparent' }}
               >
-                <ChevronRight className="h-5 w-5" />
+                <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
             </div>
           </div>
@@ -607,21 +633,21 @@ const Index = () => {
       </section>
 
       {/* Why Companies Choose Kombee - Redesigned */}
-      <section className="section-padding" style={{ backgroundColor: '#171311' }}>
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-20 sm:py-32 lg:py-40" style={{ backgroundColor: '#171311' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div
-            className="grid lg:grid-cols-2 gap-16 items-stretch"
+            className="grid lg:grid-cols-2 gap-12 sm:gap-16 items-stretch"
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
             {/* Left side - Main content */}
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               <div>
-                <h2 className="mb-8 leading-tight"
+                <h2 className="mb-6 sm:mb-8 leading-tight"
                     style={{
-                      fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+                      fontSize: 'clamp(2rem, 5vw, 3.5rem)',
                       fontFamily: 'Inter, sans-serif',
                       fontWeight: '900',
                       color: '#d8cdce'
@@ -630,27 +656,27 @@ const Index = () => {
                 </h2>
               </div>
               
-              <div className="grid md:grid-cols-2 gap-8">
+              <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
                 {[
                   {
                     title: "Fast onboarding",
                     description: "Talent available within 5–7 business days",
-                    icon: <Clock className="h-8 w-8" />
+                    icon: <Clock className="h-6 w-6 sm:h-8 sm:w-8" />
                   },
                   {
                     title: "Flexible contracts",
                     description: "Scale up or down as needed",
-                    icon: <TrendingUp className="h-8 w-8" />
+                    icon: <TrendingUp className="h-6 w-6 sm:h-8 sm:w-8" />
                   },
                   {
                     title: "Rigorous screening",
                     description: "Technical, communication, and cultural fit",
-                    icon: <Shield className="h-8 w-8" />
+                    icon: <Shield className="h-6 w-6 sm:h-8 sm:w-8" />
                   },
                   {
                     title: "Continuous support",
                     description: "From sourcing to reporting, we stay involved",
-                    icon: <Award className="h-8 w-8" />
+                    icon: <Award className="h-6 w-6 sm:h-8 sm:w-8" />
                   }
                 ].map((feature, index) => (
                   <motion.div
@@ -659,13 +685,13 @@ const Index = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     viewport={{ once: true }}
-                    className="space-y-4"
+                    className="space-y-3 sm:space-y-4"
                     whileHover={{ scale: 1.05 }}
                   >
                     <div style={{ color: '#d8cdce' }}>
                       {feature.icon}
                     </div>
-                    <h3 className="text-xl leading-tight"
+                    <h3 className="text-lg sm:text-xl leading-tight"
                         style={{
                           fontFamily: 'Inter, sans-serif',
                           fontWeight: '900',
@@ -673,7 +699,7 @@ const Index = () => {
                         }}>
                       {feature.title}
                     </h3>
-                    <p className="leading-relaxed"
+                    <p className="text-sm sm:text-base leading-relaxed"
                        style={{
                          fontFamily: 'Calibre, sans-serif',
                          fontWeight: '100',
@@ -687,9 +713,9 @@ const Index = () => {
             </div>
 
             {/* Right side - Image */}
-            <div className="relative">
+            <div className="relative mt-8 lg:mt-0">
               <motion.div 
-                className="aspect-[4/3] rounded-3xl overflow-hidden"
+                className="aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
@@ -704,7 +730,7 @@ const Index = () => {
 
           {/* Stats Section */}
           <motion.div
-            className="grid md:grid-cols-3 gap-12 mt-20 pt-20 border-t"
+            className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 mt-16 sm:mt-20 pt-16 sm:pt-20 border-t"
             style={{ borderColor: '#d8cdce' }}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -734,16 +760,16 @@ const Index = () => {
                 className="text-center"
                 whileHover={{ scale: 1.1 }}
               >
-                <div className="mb-4"
+                <div className="mb-3 sm:mb-4"
                      style={{
-                       fontSize: 'clamp(3rem, 8vw, 4rem)',
+                       fontSize: 'clamp(2.5rem, 6vw, 4rem)',
                        fontFamily: 'Inter, sans-serif',
                        fontWeight: '900',
                        color: '#d8cdce'
                      }}>
                   {item.stat}
                 </div>
-                <p style={{
+                <p className="text-sm sm:text-base" style={{
                      fontFamily: 'Calibre, sans-serif',
                      fontWeight: '100',
                      color: '#d8cdce'
@@ -756,19 +782,19 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Testimonials - Redesigned based on attached image */}
-      <section id="testimonials" className="section-padding" style={{ backgroundColor: '#d8cdce' }}>
-        <div className="max-w-7xl mx-auto px-6">
+      {/* Testimonials - Enhanced Mobile View */}
+      <section id="testimonials" className="py-20 sm:py-32 lg:py-40" style={{ backgroundColor: '#d8cdce' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div
-            className="text-center mb-20"
+            className="text-center mb-16 sm:mb-20"
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="mb-6"
+            <h2 className="mb-4 sm:mb-6"
                 style={{
-                  fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+                  fontSize: 'clamp(2rem, 5vw, 3.5rem)',
                   fontFamily: 'Inter, sans-serif',
                   fontWeight: '900',
                   color: '#171311'
@@ -781,12 +807,17 @@ const Index = () => {
             <div className="overflow-hidden">
               <motion.div
                 className="flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${currentTestimonial * (100 / 3)}%)` }}
+                style={{ 
+                  transform: `translateX(-${currentTestimonial * (100 / getCardsPerSlide())}%)` 
+                }}
               >
                 {testimonials.map((testimonial, index) => (
                   <motion.div
                     key={index}
-                    className="w-1/3 flex-shrink-0 px-4"
+                    className={`flex-shrink-0 px-2 sm:px-4 ${
+                      getCardsPerSlide() === 1 ? 'w-full' : 
+                      getCardsPerSlide() === 2 ? 'w-1/2' : 'w-1/3'
+                    }`}
                     initial={{ opacity: 0, y: 60 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: index * 0.2 }}
@@ -803,15 +834,15 @@ const Index = () => {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                         
                         {/* Author Info Overlay */}
-                        <div className="absolute bottom-4 left-4 right-4">
-                          <div className="flex items-center mb-3">
-                            <div className="w-8 h-8 rounded-full flex items-center justify-center mr-3" style={{ backgroundColor: '#d8cdce' }}>
+                        <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4">
+                          <div className="flex items-center mb-2 sm:mb-3">
+                            <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center mr-2 sm:mr-3" style={{ backgroundColor: '#d8cdce' }}>
                               <span className="text-xs font-bold" style={{ color: '#171311' }}>
                                 {testimonial.company.charAt(0)}
                               </span>
                             </div>
                             <div>
-                              <p className="font-bold text-white text-sm"
+                              <p className="font-bold text-white text-xs sm:text-sm"
                                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: '900' }}>
                                 {testimonial.author}
                               </p>
@@ -824,11 +855,11 @@ const Index = () => {
                         </div>
                       </div>
                       
-                      <CardContent className="p-6">
+                      <CardContent className="p-4 sm:p-6">
                         {/* Star Rating */}
-                        <div className="flex justify-start mb-4">
+                        <div className="flex justify-start mb-3 sm:mb-4">
                           {[...Array(testimonial.rating)].map((_, i) => (
-                            <Star key={i} className="h-4 w-4 text-yellow-500 fill-current" />
+                            <Star key={i} className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-500 fill-current" />
                           ))}
                         </div>
                         
@@ -838,7 +869,7 @@ const Index = () => {
                                      fontFamily: 'Calibre, sans-serif',
                                      fontWeight: '100',
                                      color: '#d8cdce',
-                                     fontSize: '0.9rem'
+                                     fontSize: 'clamp(0.8rem, 2vw, 0.9rem)'
                                    }}>
                           "{testimonial.text}"
                         </blockquote>
@@ -850,24 +881,24 @@ const Index = () => {
             </div>
 
             {/* Navigation Controls */}
-            <div className="flex justify-center mt-12 space-x-4">
+            <div className="flex justify-center mt-8 sm:mt-12 space-x-4">
               <Button
                 variant="outline"
                 size="lg"
                 onClick={prevTestimonial}
-                className="p-3 rounded-full"
+                className="p-2 sm:p-3 rounded-full"
                 style={{ borderColor: '#171311', color: '#171311', backgroundColor: 'transparent' }}
               >
-                <ChevronLeft className="h-5 w-5" />
+                <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
               <Button
                 variant="outline"
                 size="lg"
                 onClick={nextTestimonial}
-                className="p-3 rounded-full"
+                className="p-2 sm:p-3 rounded-full"
                 style={{ borderColor: '#171311', color: '#171311', backgroundColor: 'transparent' }}
               >
-                <ChevronRight className="h-5 w-5" />
+                <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
             </div>
           </div>
@@ -875,25 +906,25 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section id="contact" className="section-padding" style={{ backgroundColor: '#d8cdce' }}>
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <section id="contact" className="py-20 sm:py-32 lg:py-40" style={{ backgroundColor: '#d8cdce' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid lg:grid-cols-2 gap-12 sm:gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 1 }}
               viewport={{ once: true }}
             >
-              <h2 className="mb-8"
+              <h2 className="mb-6 sm:mb-8"
                   style={{
-                    fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+                    fontSize: 'clamp(2rem, 5vw, 3.5rem)',
                     fontFamily: 'Inter, sans-serif',
                     fontWeight: '900',
                     color: '#24180e'
                   }}>
                 Add the Right People to Your Team Without the Hiring Delay
               </h2>
-              <p className="mb-10 text-lg"
+              <p className="mb-8 sm:mb-10 text-base sm:text-lg"
                  style={{
                    fontFamily: 'Calibre, sans-serif',
                    fontWeight: '100',
@@ -901,7 +932,7 @@ const Index = () => {
                  }}>
                 Kombee simplifies team expansion with reliable, flexible staffing. Focus on building — we'll handle the resourcing.
               </p>
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {[
                   "5-7 day onboarding process",
                   "Pre-vetted senior professionals",
@@ -916,8 +947,8 @@ const Index = () => {
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     viewport={{ once: true }}
                   >
-                    <CheckCircle className="h-5 w-5 mr-3 flex-shrink-0 font-bold" style={{ color: '#171311' }} />
-                    <span className="font-bold"
+                    <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 flex-shrink-0 font-bold" style={{ color: '#171311' }} />
+                    <span className="font-bold text-sm sm:text-base"
                           style={{
                             fontFamily: 'Inter, sans-serif',
                             fontWeight: '900',
@@ -935,10 +966,11 @@ const Index = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 1 }}
               viewport={{ once: true }}
+              className="mt-8 lg:mt-0"
             >
               <Card className="card-feature" style={{ backgroundColor: '#24180e', border: '1px solid #d8cdce' }}>
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold mb-8"
+                <CardContent className="p-6 sm:p-8">
+                  <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8"
                       style={{
                         fontFamily: 'Inter, sans-serif',
                         fontWeight: '900',
@@ -946,11 +978,11 @@ const Index = () => {
                       }}>
                     Get Started Today
                   </h3>
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-4">
+                  <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       <Input
                         placeholder="First Name"
-                        className="h-12"
+                        className="h-10 sm:h-12"
                         style={{ 
                           borderColor: '#d8cdce', 
                           backgroundColor: 'transparent',
@@ -962,7 +994,7 @@ const Index = () => {
                       />
                       <Input
                         placeholder="Last Name"
-                        className="h-12"
+                        className="h-10 sm:h-12"
                         style={{ 
                           borderColor: '#d8cdce', 
                           backgroundColor: 'transparent',
@@ -976,7 +1008,7 @@ const Index = () => {
                     <Input
                       type="email"
                       placeholder="Work Email"
-                      className="h-12"
+                      className="h-10 sm:h-12"
                       style={{ 
                         borderColor: '#d8cdce', 
                         backgroundColor: 'transparent',
@@ -988,7 +1020,7 @@ const Index = () => {
                     />
                     <Input
                       placeholder="Company Name"
-                      className="h-12"
+                      className="h-10 sm:h-12"
                       style={{ 
                         borderColor: '#d8cdce', 
                         backgroundColor: 'transparent',
@@ -1000,7 +1032,7 @@ const Index = () => {
                     />
                     <Textarea
                       placeholder="Tell us about your project and team needs..."
-                      className="min-h-[120px]"
+                      className="min-h-[100px] sm:min-h-[120px]"
                       style={{ 
                         borderColor: '#d8cdce', 
                         backgroundColor: 'transparent',
@@ -1013,7 +1045,7 @@ const Index = () => {
                     <Button
                       type="submit"
                       size="lg"
-                      className="w-full text-lg group"
+                      className="w-full text-base sm:text-lg group"
                       style={{ 
                         backgroundColor: '#d8cdce', 
                         color: '#24180e',
@@ -1022,7 +1054,7 @@ const Index = () => {
                       }}
                     >
                       Consult Now
-                      <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="ml-2 sm:ml-3 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </form>
                 </CardContent>
@@ -1033,24 +1065,24 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-16" style={{ backgroundColor: '#171311', color: '#d8cdce' }}>
-        <div className="max-w-7xl mx-auto px-6">
+      <footer className="py-12 sm:py-16" style={{ backgroundColor: '#171311', color: '#d8cdce' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div
-            className="grid md:grid-cols-4 gap-12"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
             <div>
-              <h3 className="text-2xl mb-6"
+              <h3 className="text-xl sm:text-2xl mb-4 sm:mb-6"
                   style={{
                     fontFamily: 'Inter, sans-serif',
                     fontWeight: '900'
                   }}>
                 Kombee
               </h3>
-              <p className="leading-relaxed"
+              <p className="leading-relaxed text-sm sm:text-base"
                  style={{
                    fontFamily: 'Calibre, sans-serif',
                    fontWeight: '100'
@@ -1059,14 +1091,14 @@ const Index = () => {
               </p>
             </div>
             <div>
-              <h4 className="font-bold mb-6 text-lg"
+              <h4 className="font-bold mb-4 sm:mb-6 text-base sm:text-lg"
                   style={{
                     fontFamily: 'Inter, sans-serif',
                     fontWeight: '900'
                   }}>
                 Services
               </h4>
-              <ul className="space-y-3"
+              <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base"
                   style={{
                     fontFamily: 'Calibre, sans-serif',
                     fontWeight: '100'
@@ -1078,14 +1110,14 @@ const Index = () => {
               </ul>
             </div>
             <div>
-              <h4 className="font-bold mb-6 text-lg"
+              <h4 className="font-bold mb-4 sm:mb-6 text-base sm:text-lg"
                   style={{
                     fontFamily: 'Inter, sans-serif',
                     fontWeight: '900'
                   }}>
                 Company
               </h4>
-              <ul className="space-y-3"
+              <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base"
                   style={{
                     fontFamily: 'Calibre, sans-serif',
                     fontWeight: '100'
@@ -1097,14 +1129,14 @@ const Index = () => {
               </ul>
             </div>
             <div>
-              <h4 className="font-bold mb-6 text-lg"
+              <h4 className="font-bold mb-4 sm:mb-6 text-base sm:text-lg"
                   style={{
                     fontFamily: 'Inter, sans-serif',
                     fontWeight: '900'
                   }}>
                 Contact
               </h4>
-              <ul className="space-y-3"
+              <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base"
                   style={{
                     fontFamily: 'Calibre, sans-serif',
                     fontWeight: '100'
@@ -1115,7 +1147,7 @@ const Index = () => {
               </ul>
             </div>
           </motion.div>
-          <div className="border-t mt-12 pt-8 text-center"
+          <div className="border-t mt-8 sm:mt-12 pt-6 sm:pt-8 text-center text-sm sm:text-base"
                style={{ 
                  borderColor: '#d8cdce',
                  fontFamily: 'Calibre, sans-serif',
