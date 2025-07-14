@@ -95,7 +95,6 @@ const Index = () => {
       rotateX: 0,
       transition: {
         duration: 0.8,
-        ease: "easeOut",
         staggerChildren: 0.1
       }
     },
@@ -105,8 +104,7 @@ const Index = () => {
       scale: 1.1,
       rotateX: -10,
       transition: {
-        duration: 0.6,
-        ease: "easeOut"
+        duration: 0.6
       }
     }
   };
@@ -122,8 +120,7 @@ const Index = () => {
       x: 0,
       scale: 1,
       transition: {
-        duration: 0.6,
-        ease: "easeOut"
+        duration: 0.6
       }
     }
   };
@@ -141,8 +138,7 @@ const Index = () => {
       rotateY: 0,
       scale: 1,
       transition: {
-        duration: 0.7,
-        ease: "easeOut"
+        duration: 0.7
       }
     }
   };
