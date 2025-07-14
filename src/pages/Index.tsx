@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -8,8 +9,6 @@ import { Badge } from '@/components/ui/badge';
 import { 
   ChevronLeft, 
   ChevronRight, 
-  Moon, 
-  Sun, 
   Menu, 
   X,
   ArrowRight,
@@ -30,17 +29,22 @@ import {
 import { useToast } from '@/hooks/use-toast';
 
 const Index = () => {
-  const [isDark, setIsDark] = useState(false);
   const [isNavVisible, setIsNavVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeChallengeIndex, setActiveChallengeIndex] = useState(0);
+  const [currentRoleSlide, setCurrentRoleSlide] = useState(0);
   const { toast } = useToast();
 
   const { scrollY } = useScroll();
   const heroOpacity = useTransform(scrollY, [0, 500], [1, 0]);
   const heroScale = useTransform(scrollY, [0, 500], [1, 0.95]);
+
+  // Set dark mode by default
+  useEffect(() => {
+    document.documentElement.classList.add('dark');
+  }, []);
 
   useEffect(() => {
     const controlNavbar = () => {
@@ -58,39 +62,31 @@ const Index = () => {
     return () => window.removeEventListener('scroll', controlNavbar);
   }, [lastScrollY]);
 
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDark]);
-
   const challenges = [
     {
       problem: "Slow hiring processes?",
       solution: "Onboard fully vetted experts in 5–7 business days.",
-      image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       problem: "Rising costs?",
       solution: "Flexible, transparent engagement models that lower fixed overheads.",
-      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       problem: "Limited in-house bandwidth?",
       solution: "Augment your team without disrupting your internal operations.",
-      image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       problem: "Poor fit or domain mismatch?",
       solution: "All professionals are screened for domain alignment and delivery mindset.",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       problem: "Time zone or communication gaps?",
       solution: "Smooth collaboration with overlapping work hours and responsive communication built-in.",
-      image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     }
   ];
 
@@ -142,56 +138,64 @@ const Index = () => {
       experience: "3–6 Yrs",
       description: "Figma-first designers skilled in user flows, wireframes, and clean, conversion-focused UI.",
       skills: ["Figma", "User Research", "Prototyping", "Design Systems"],
-      icon: <Eye className="h-6 w-6" />
+      icon: <Eye className="h-6 w-6" />,
+      image: "https://images.unsplash.com/photo-1559028006-448665bd7c7f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       title: "Business Analysts",
       experience: "4–7 Yrs",
       description: "Translate business goals into clear tech specs. Strong in documentation and stakeholder alignment.",
       skills: ["Requirements Gathering", "Process Mapping", "Stakeholder Management", "Documentation"],
-      icon: <Target className="h-6 w-6" />
+      icon: <Target className="h-6 w-6" />,
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       title: "Mobile Developers",
       experience: "3–6 Yrs",
       description: "Build stable Android, iOS, and Flutter apps. Experienced in scalable mobile delivery across domains.",
       skills: ["React Native", "Flutter", "iOS", "Android"],
-      icon: <Zap className="h-6 w-6" />
+      icon: <Zap className="h-6 w-6" />,
+      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       title: "Front-End Developers",
       experience: "3–5 Yrs",
       description: "Experts in React, Vue, Angular. Deliver pixel-perfect, responsive builds with fast performance.",
       skills: ["React", "Vue.js", "Angular", "TypeScript"],
-      icon: <Lightbulb className="h-6 w-6" />
+      icon: <Lightbulb className="h-6 w-6" />,
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       title: "Back-End Developers",
       experience: "4–7 Yrs",
       description: "Skilled in Node.js, Laravel, Python. Strong in APIs, secure architecture, and database logic.",
       skills: ["Node.js", "Python", "Laravel", "Database Design"],
-      icon: <Shield className="h-6 w-6" />
+      icon: <Shield className="h-6 w-6" />,
+      image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       title: "Full-Stack Developers",
       experience: "4–8 Yrs",
       description: "Handle front-end to deployment. Ideal for lean teams that need fast, cross-functional builds.",
       skills: ["Full-Stack", "DevOps", "Cloud", "Microservices"],
-      icon: <Users className="h-6 w-6" />
+      icon: <Users className="h-6 w-6" />,
+      image: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       title: "QA Engineers",
       experience: "3–6 Yrs",
       description: "Manual and automation testers. Ensure quality, speed, and reliability across platforms.",
       skills: ["Test Automation", "Manual Testing", "CI/CD", "Performance Testing"],
-      icon: <CheckCircle className="h-6 w-6" />
+      icon: <CheckCircle className="h-6 w-6" />,
+      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       title: "Project Managers",
       experience: "5–8 Yrs",
       description: "Agile leads with sprint, resource, and delivery experience. Proficient in Jira and team coordination.",
       skills: ["Agile", "Scrum", "Jira", "Team Leadership"],
-      icon: <Clock className="h-6 w-6" />
+      icon: <Clock className="h-6 w-6" />,
+      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     }
   ];
 
@@ -211,35 +215,46 @@ const Index = () => {
     setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
+  const nextRole = () => {
+    setCurrentRoleSlide((prev) => (prev + 1) % Math.ceil(roles.length / 4));
+  };
+
+  const prevRole = () => {
+    setCurrentRoleSlide((prev) => (prev - 1 + Math.ceil(roles.length / 4)) % Math.ceil(roles.length / 4));
+  };
+
+  const getRoleSlides = () => {
+    const slides = [];
+    for (let i = 0; i < roles.length; i += 4) {
+      slides.push(roles.slice(i, i + 4));
+    }
+    return slides;
+  };
+
   return (
-    <div className={`min-h-screen transition-colors duration-500 ${isDark ? 'dark' : ''}`}>
+    <div className="min-h-screen transition-colors duration-500 dark">
       {/* Navigation */}
       <motion.nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isNavVisible ? 'translate-y-0' : '-translate-y-full'
-        } nav-glass`}
+        }`}
+        style={{ backgroundColor: '#f5c8a2' }}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <motion.div 
-            className="text-3xl font-black text-primary tracking-tight"
-            style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}
+            className="text-3xl font-black tracking-tight"
+            style={{ 
+              fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+              color: '#24180e'
+            }}
             whileHover={{ scale: 1.05 }}
           >
             Kombee
           </motion.div>
           
           <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsDark(!isDark)}
-              className="p-2 hover:bg-muted rounded-full"
-            >
-              {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </Button>
-            
             <Button
               variant="ghost"
               size="sm"
@@ -307,7 +322,8 @@ const Index = () => {
             <Button
               variant="outline"
               size="lg"
-              className="text-lg group border-white/30 text-amber-900 hover:bg-white/10 bg-white/90 hover:text-amber-800 font-semibold"
+              className="text-lg group border-white/30 hover:bg-white/10 bg-white/90 hover:text-amber-800 font-semibold"
+              style={{ color: '#8B4513' }}
             >
               <Play className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform" />
               Watch Demo
@@ -328,7 +344,7 @@ const Index = () => {
       </section>
 
       {/* Challenges Section */}
-      <section id="challenges" className="py-32 lg:py-40 bg-background dark:bg-orange-50">
+      <section id="challenges" className="py-32 lg:py-40" style={{ backgroundColor: '#f5c8a2' }}>
         <div className="max-w-7xl mx-auto px-6">
           {/* Section Header */}
           <motion.div
@@ -338,16 +354,16 @@ const Index = () => {
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-6xl md:text-7xl font-black text-foreground mb-8 leading-tight tracking-tight">
-              Flexible Tech Hiring.
+            <h2 className="text-6xl md:text-7xl font-black mb-8 leading-tight tracking-tight" style={{ color: '#24180e' }}>
+              Flexible Tech Hiring
             </h2>
-            <p className="text-4xl md:text-5xl font-black text-foreground mb-6 leading-tight tracking-tight">
-              Delivery Pods.
+            <p className="text-4xl md:text-5xl font-black mb-6 leading-tight tracking-tight" style={{ color: '#24180e' }}>
+              Delivery Pods
             </p>
-            <p className="text-4xl md:text-5xl font-black text-foreground mb-12 leading-tight tracking-tight">
-              Plug-and-Play Talent.
+            <p className="text-4xl md:text-5xl font-black mb-12 leading-tight tracking-tight" style={{ color: '#24180e' }}>
+              Plug-and-Play Talent
             </p>
-            <div className="w-32 h-1.5 bg-primary mx-auto rounded-full"></div>
+            <div className="w-32 h-1.5 mx-auto rounded-full" style={{ backgroundColor: '#24180e' }}></div>
           </motion.div>
 
           {/* Challenge Navigation Menu */}
@@ -358,15 +374,18 @@ const Index = () => {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="flex space-x-2 bg-muted/30 rounded-full p-1.5 backdrop-blur-sm">
+            <div className="flex space-x-2 bg-white/20 rounded-full p-1.5 backdrop-blur-sm">
               {challenges.map((_, index) => (
                 <button
                   key={index}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     activeChallengeIndex === index 
-                      ? 'bg-primary scale-125' 
-                      : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                      ? 'scale-125' 
+                      : 'hover:bg-white/50'
                   }`}
+                  style={{ 
+                    backgroundColor: activeChallengeIndex === index ? '#24180e' : 'rgba(255,255,255,0.3)'
+                  }}
                   onClick={() => {
                     const element = document.querySelector(`[data-challenge-index="${index}"]`);
                     element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -392,16 +411,18 @@ const Index = () => {
               >
                 <div className={`space-y-8 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
                   <div>
-                    <h3 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    <h3 className="text-4xl md:text-5xl font-black mb-6 tracking-tight" 
+                        style={{ fontFamily: 'Inter, sans-serif', color: '#24180e' }}>
                       {challenge.problem}
                     </h3>
-                    <p className="text-2xl md:text-2xl font-bold text-foreground leading-relaxed tracking-tight" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    <p className="text-2xl md:text-2xl font-bold leading-relaxed tracking-tight" 
+                       style={{ fontFamily: 'Inter, sans-serif', color: '#24180e' }}>
                       {challenge.solution}
                     </p>
                   </div>
                 </div>
                 <div className={`relative ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                  <div className="aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
+                  <div className="aspect-square rounded-3xl overflow-hidden">
                     <img 
                       src={challenge.image}
                       alt={`Solution for ${challenge.problem}`}
@@ -415,7 +436,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Roles Section */}
+      {/* Roles Section with Carousel */}
       <section id="roles" className="section-padding bg-background">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
@@ -425,51 +446,109 @@ const Index = () => {
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-headline mb-6">
+            <h2 className="text-5xl font-black text-foreground mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>
               Top-Tier Tech Talent Available On Demand
             </h2>
-            <p className="text-subheadline">
+            <p className="text-2xl font-black text-foreground" style={{ fontFamily: 'Inter, sans-serif' }}>
               Roles You Can Hire Through Kombee
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {roles.map((role, index) => (
+          {/* Carousel Container */}
+          <div className="relative">
+            <div className="overflow-hidden">
               <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 60 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="group"
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${currentRoleSlide * 100}%)` }}
               >
-                <Card className="card-modern h-full group-hover:shadow-2xl">
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="text-primary group-hover:scale-110 transition-transform duration-300">
-                        {role.icon}
-                      </div>
-                      <Badge variant="secondary" className="bg-muted text-muted-foreground font-semibold">
-                        {role.experience}
-                      </Badge>
-                    </div>
-                    <h3 className="text-lg font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
-                      {role.title}
-                    </h3>
-                    <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
-                      {role.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {role.skills.map((skill, skillIndex) => (
-                        <Badge key={skillIndex} variant="outline" className="text-xs border-border/50">
-                          {skill}
-                        </Badge>
+                {getRoleSlides().map((slideRoles, slideIndex) => (
+                  <div key={slideIndex} className="w-full flex-shrink-0">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                      {slideRoles.map((role, index) => (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, y: 60 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.8, delay: index * 0.1 }}
+                          viewport={{ once: true }}
+                          className="group"
+                        >
+                          <Card className="card-modern h-full group-hover:shadow-2xl overflow-hidden">
+                            <div className="aspect-video overflow-hidden">
+                              <img 
+                                src={role.image}
+                                alt={role.title}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              />
+                            </div>
+                            <CardContent className="p-6">
+                              <div className="flex items-center justify-between mb-6">
+                                <div className="text-primary group-hover:scale-110 transition-transform duration-300">
+                                  {role.icon}
+                                </div>
+                                <Badge variant="secondary" className="bg-muted text-muted-foreground font-semibold">
+                                  {role.experience}
+                                </Badge>
+                              </div>
+                              <h3 className="text-lg font-black text-foreground mb-4 group-hover:text-primary transition-colors" 
+                                  style={{ fontFamily: 'Inter, sans-serif' }}>
+                                {role.title}
+                              </h3>
+                              <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
+                                {role.description}
+                              </p>
+                              <div className="flex flex-wrap gap-2">
+                                {role.skills.map((skill, skillIndex) => (
+                                  <Badge key={skillIndex} variant="outline" className="text-xs border-border/50">
+                                    {skill}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </motion.div>
                       ))}
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                ))}
               </motion.div>
-            ))}
+            </div>
+
+            {/* Carousel Navigation */}
+            <div className="flex justify-center items-center mt-8 space-x-4">
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={prevRole}
+                className="p-3 border-border hover:bg-muted rounded-full"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
+              
+              {/* Dots Indicator */}
+              <div className="flex space-x-2">
+                {getRoleSlides().map((_, index) => (
+                  <button
+                    key={index}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      currentRoleSlide === index 
+                        ? 'bg-primary scale-125' 
+                        : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                    }`}
+                    onClick={() => setCurrentRoleSlide(index)}
+                  />
+                ))}
+              </div>
+              
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={nextRole}
+                className="p-3 border-border hover:bg-muted rounded-full"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </Button>
+            </div>
           </div>
         </div>
       </section>
