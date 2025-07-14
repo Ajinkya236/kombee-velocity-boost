@@ -35,6 +35,7 @@ const Index = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeChallengeIndex, setActiveChallengeIndex] = useState(0);
   const { toast } = useToast();
 
   const { scrollY } = useScroll();
@@ -64,6 +65,55 @@ const Index = () => {
       document.documentElement.classList.remove('dark');
     }
   }, [isDark]);
+
+  const challenges = [
+    {
+      problem: "Slow hiring processes?",
+      solution: "Onboard fully vetted experts in 5–7 business days.",
+      image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      problem: "Rising costs?",
+      solution: "Flexible, transparent engagement models that lower fixed overheads.",
+      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      problem: "Limited in-house bandwidth?",
+      solution: "Augment your team without disrupting your internal operations.",
+      image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      problem: "Poor fit or domain mismatch?",
+      solution: "All professionals are screened for domain alignment and delivery mindset.",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      problem: "Time zone or communication gaps?",
+      solution: "Smooth collaboration with overlapping work hours and responsive communication built-in.",
+      image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    }
+  ];
+
+  // Handle scroll-based challenge highlighting
+  useEffect(() => {
+    const handleScroll = () => {
+      const challengeElements = document.querySelectorAll('[data-challenge-index]');
+      let activeIndex = 0;
+      
+      challengeElements.forEach((element, index) => {
+        const rect = element.getBoundingClientRect();
+        const isInView = rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
+        if (isInView) {
+          activeIndex = index;
+        }
+      });
+      
+      setActiveChallengeIndex(activeIndex);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const testimonials = [
     {
@@ -280,7 +330,7 @@ const Index = () => {
             <Button
               variant="outline"
               size="lg"
-              className="btn-secondary text-lg group border-white/30 text-white hover:bg-white/10"
+              className="text-lg group border-white/30 text-amber-900 hover:bg-white/10 bg-white/90 hover:text-amber-800 font-semibold"
             >
               <Play className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform" />
               Watch Demo
@@ -301,174 +351,89 @@ const Index = () => {
       </section>
 
       {/* Challenges Section */}
-      <section id="challenges" className="py-24 lg:py-32 bg-background">
+      <section id="challenges" className="py-32 lg:py-40 bg-background">
         <div className="max-w-7xl mx-auto px-6">
-          {/* Section Header - Apple Style */}
+          {/* Section Header */}
           <motion.div
-            className="text-center mb-20"
+            className="text-center mb-32"
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-5xl md:text-6xl font-black text-foreground mb-6 leading-tight">
+            <h2 className="text-6xl md:text-7xl font-black text-foreground mb-8 leading-tight tracking-tight">
               Flexible Tech Hiring.
             </h2>
-            <p className="text-3xl md:text-4xl font-black text-foreground mb-4 leading-tight">
+            <p className="text-4xl md:text-5xl font-black text-foreground mb-6 leading-tight tracking-tight">
               Delivery Pods.
             </p>
-            <p className="text-3xl md:text-4xl font-black text-foreground mb-8 leading-tight">
+            <p className="text-4xl md:text-5xl font-black text-foreground mb-12 leading-tight tracking-tight">
               Plug-and-Play Talent.
             </p>
-            <div className="w-24 h-1 bg-primary mx-auto rounded-full"></div>
+            <div className="w-32 h-1.5 bg-primary mx-auto rounded-full"></div>
+          </motion.div>
+
+          {/* Challenge Navigation Menu */}
+          <motion.div
+            className="flex justify-center mb-20"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="flex space-x-2 bg-muted/30 rounded-full p-1.5 backdrop-blur-sm">
+              {challenges.map((_, index) => (
+                <button
+                  key={index}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    activeChallengeIndex === index 
+                      ? 'bg-primary scale-125' 
+                      : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                  }`}
+                  onClick={() => {
+                    const element = document.querySelector(`[data-challenge-index="${index}"]`);
+                    element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  }}
+                />
+              ))}
+            </div>
           </motion.div>
 
           {/* Challenges Grid */}
-          <div className="space-y-24">
-            {/* Challenge 1 */}
-            <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="grid lg:grid-cols-2 gap-16 items-center"
-            >
-              <div className="space-y-8">
-                <div>
-                  <h3 className="text-2xl font-black text-foreground mb-4">
-                    Slow hiring processes
-                  </h3>
-                  <p className="text-xl font-bold text-foreground leading-relaxed">
-                    Onboard fully vetted experts in 5–7 business days.
-                  </p>
+          <div className="space-y-32">
+            {challenges.map((challenge, index) => (
+              <motion.div
+                key={index}
+                data-challenge-index={index}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+                viewport={{ once: true, margin: "-20%" }}
+                className={`grid lg:grid-cols-2 gap-20 items-center ${
+                  index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
+                }`}
+              >
+                <div className={`space-y-8 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                  <div>
+                    <h3 className="text-3xl md:text-4xl font-black text-foreground mb-6 tracking-tight" style={{ fontFamily: 'Inter, sans-serif' }}>
+                      {challenge.problem}
+                    </h3>
+                    <p className="text-2xl md:text-3xl font-black text-foreground leading-relaxed tracking-tight" style={{ fontFamily: 'Inter, sans-serif' }}>
+                      {challenge.solution}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="relative">
-                <div className="aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 p-8 flex items-center justify-center">
-                  <img 
-                    src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                    alt="Fast hiring process"
-                    className="w-full h-full object-cover rounded-2xl"
-                  />
+                <div className={`relative ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                  <div className="aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
+                    <img 
+                      src={challenge.image}
+                      alt={`Solution for ${challenge.problem}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-
-            {/* Challenge 2 */}
-            <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="grid lg:grid-cols-2 gap-16 items-center"
-            >
-              <div className="relative lg:order-2">
-                <div className="aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 p-8 flex items-center justify-center">
-                  <img 
-                    src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                    alt="Cost optimization"
-                    className="w-full h-full object-cover rounded-2xl"
-                  />
-                </div>
-              </div>
-              <div className="space-y-8 lg:order-1">
-                <div>
-                  <h3 className="text-2xl font-black text-foreground mb-4">
-                    Rising costs
-                  </h3>
-                  <p className="text-xl font-bold text-foreground leading-relaxed">
-                    Flexible, transparent engagement models that lower fixed overheads.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Challenge 3 */}
-            <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              viewport={{ once: true }}
-              className="grid lg:grid-cols-2 gap-16 items-center"
-            >
-              <div className="space-y-8">
-                <div>
-                  <h3 className="text-2xl font-black text-foreground mb-4">
-                    Limited in-house bandwidth
-                  </h3>
-                  <p className="text-xl font-bold text-foreground leading-relaxed">
-                    Augment your team without disrupting your internal operations.
-                  </p>
-                </div>
-              </div>
-              <div className="relative">
-                <div className="aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 p-8 flex items-center justify-center">
-                  <img 
-                    src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                    alt="Team collaboration"
-                    className="w-full h-full object-cover rounded-2xl"
-                  />
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Challenge 4 */}
-            <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              viewport={{ once: true }}
-              className="grid lg:grid-cols-2 gap-16 items-center"
-            >
-              <div className="relative lg:order-2">
-                <div className="aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800 p-8 flex items-center justify-center">
-                  <img 
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                    alt="Professional screening"
-                    className="w-full h-full object-cover rounded-2xl"
-                  />
-                </div>
-              </div>
-              <div className="space-y-8 lg:order-1">
-                <div>
-                  <h3 className="text-2xl font-black text-foreground mb-4">
-                    Poor fit or domain mismatch
-                  </h3>
-                  <p className="text-xl font-bold text-foreground leading-relaxed">
-                    All professionals are screened for domain alignment and delivery mindset.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Challenge 5 */}
-            <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              viewport={{ once: true }}
-              className="grid lg:grid-cols-2 gap-16 items-center"
-            >
-              <div className="space-y-8">
-                <div>
-                  <h3 className="text-2xl font-black text-foreground mb-4">
-                    Time zone or communication gaps
-                  </h3>
-                  <p className="text-xl font-bold text-foreground leading-relaxed">
-                    Smooth collaboration with overlapping work hours and responsive communication built-in.
-                  </p>
-                </div>
-              </div>
-              <div className="relative">
-                <div className="aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900 dark:to-orange-800 p-8 flex items-center justify-center">
-                  <img 
-                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                    alt="Global communication"
-                    className="w-full h-full object-cover rounded-2xl"
-                  />
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
