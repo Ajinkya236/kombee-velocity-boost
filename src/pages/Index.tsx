@@ -121,19 +121,25 @@ const Index = () => {
       text: "Kombee delivered exactly what we needed - senior developers who integrated seamlessly into our workflow. The 5-day turnaround was incredible.",
       author: "Sarah Chen",
       role: "CTO at TechFlow",
-      rating: 5
+      rating: 5,
+      company: "TechFlow",
+      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
     },
     {
       text: "Their vetted analysts helped us define our product roadmap clearly. The quality of talent and communication exceeded our expectations.",
       author: "Michael Rodriguez",
       role: "Product Director at InnovateLab",
-      rating: 5
+      rating: 5,
+      company: "InnovateLab",
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
     },
     {
       text: "We scaled our design team 3x in just two weeks with Kombee. The designers understood our brand immediately and delivered outstanding work.",
       author: "Emma Thompson",
       role: "Design Lead at Creative Solutions",
-      rating: 5
+      rating: 5,
+      company: "Creative Solutions",
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
     }
   ];
 
@@ -367,7 +373,7 @@ const Index = () => {
       </section>
 
       {/* Challenges Section */}
-      <section id="challenges" className="py-32 lg:py-40" style={{ backgroundColor: '#24180e' }}>
+      <section id="challenges" className="py-32 lg:py-40" style={{ backgroundColor: '#171311' }}>
         <div className="max-w-7xl mx-auto px-6">
           {/* Section Header */}
           <motion.div
@@ -464,8 +470,8 @@ const Index = () => {
                     <p className="leading-relaxed tracking-tight" 
                        style={{ 
                          fontSize: 'clamp(1.5rem, 4vw, 2rem)',
-                         fontFamily: 'Inter, sans-serif', 
-                         fontWeight: '900',
+                         fontFamily: 'Calibre, sans-serif', 
+                         fontWeight: '100',
                          color: '#d8cdce' 
                        }}>
                       {challenge.solution}
@@ -628,8 +634,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Why Choose Us - Redesigned based on reference image */}
-      <section className="section-padding" style={{ backgroundColor: '#24180e' }}>
+      {/* Why Companies Choose Kombee - Redesigned */}
+      <section className="section-padding" style={{ backgroundColor: '#171311' }}>
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             className="grid lg:grid-cols-2 gap-16 items-stretch"
@@ -648,30 +654,30 @@ const Index = () => {
                       fontWeight: '900',
                       color: '#d8cdce'
                     }}>
-                  We stand behind our results
+                  Why Companies Choose Kombee
                 </h2>
               </div>
               
               <div className="grid md:grid-cols-2 gap-8">
                 {[
                   {
-                    title: "Accuracy first",
-                    description: "Your team trains our AI robots to handle tasks your way, with fail-safe systems to prevent mistakes",
-                    icon: <Target className="h-8 w-8" />
+                    title: "Fast onboarding",
+                    description: "Talent available within 5–7 business days",
+                    icon: <Clock className="h-8 w-8" />
                   },
                   {
-                    title: "Results driven",
-                    description: "Your return on investment is how we measure success — delivering real value to your bottom line",
+                    title: "Flexible contracts",
+                    description: "Scale up or down as needed",
                     icon: <TrendingUp className="h-8 w-8" />
                   },
                   {
-                    title: "Money back guarantee",
-                    description: "We back our commitment to your success with a full refund guarantee if you're not satisfied",
+                    title: "Rigorous screening",
+                    description: "Technical, communication, and cultural fit",
                     icon: <Shield className="h-8 w-8" />
                   },
                   {
-                    title: "Industry expertise",
-                    description: "Built for food and beverage wholesalers by experts with deep industry knowledge",
+                    title: "Continuous support",
+                    description: "From sourcing to reporting, we stay involved",
                     icon: <Award className="h-8 w-8" />
                   }
                 ].map((feature, index) => (
@@ -730,16 +736,16 @@ const Index = () => {
           >
             {[
               {
-                stat: "90%",
-                description: "reduction in manual work"
+                stat: "15%",
+                description: "Profits Gain"
               },
               {
-                stat: "99.9%",
-                description: "accuracy with fail-safe systems"
+                stat: "120%",
+                description: "Productivity Increased"
               },
               {
-                stat: "24,650+",
-                description: "hours saved by our wholesalers in the last month"
+                stat: "5000+",
+                description: "hours saved"
               }
             ].map((item, index) => (
               <motion.div
@@ -772,8 +778,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section id="testimonials" className="section-padding bg-background">
+      {/* Testimonials - Redesigned based on attached image */}
+      <section id="testimonials" className="section-padding" style={{ backgroundColor: '#d8cdce' }}>
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             className="text-center mb-20"
@@ -787,67 +793,87 @@ const Index = () => {
                   fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
                   fontFamily: 'Inter, sans-serif',
                   fontWeight: '900',
-                  color: '#d8cdce'
+                  color: '#171311'
                 }}>
               What Our Clients Say
             </h2>
           </motion.div>
 
-          <div className="relative max-w-4xl mx-auto">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentTestimonial}
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.6 }}
-                className="text-center"
-              >
-                <Card className="card-feature" style={{ backgroundColor: '#24180e', border: '1px solid #d8cdce' }}>
-                  <CardContent className="p-12">
-                    <div className="flex justify-center mb-8">
-                      {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
-                        <Star key={i} className="h-6 w-6 text-yellow-500 fill-current" />
-                      ))}
+          <div className="relative max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-8">
+              {testimonials.map((testimonial, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 60 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.2 }}
+                  viewport={{ once: true }}
+                  className="relative"
+                >
+                  <Card className="overflow-hidden h-full" style={{ backgroundColor: '#171311', border: 'none' }}>
+                    {/* Background Image */}
+                    <div className="aspect-[4/3] overflow-hidden relative">
+                      <img 
+                        src={testimonial.image}
+                        alt={testimonial.author}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                      
+                      {/* Author Info Overlay */}
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <div className="flex items-center mb-3">
+                          <div className="w-8 h-8 rounded-full flex items-center justify-center mr-3" style={{ backgroundColor: '#d8cdce' }}>
+                            <span className="text-xs font-bold" style={{ color: '#171311' }}>
+                              {testimonial.company.charAt(0)}
+                            </span>
+                          </div>
+                          <div>
+                            <p className="font-bold text-white text-sm"
+                               style={{ fontFamily: 'Inter, sans-serif', fontWeight: '900' }}>
+                              {testimonial.author}
+                            </p>
+                            <p className="text-white/80 text-xs"
+                               style={{ fontFamily: 'Calibre, sans-serif', fontWeight: '100' }}>
+                              {testimonial.company.toUpperCase()}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <blockquote className="mb-8 leading-relaxed italic text-lg"
-                               style={{
-                                 fontFamily: 'Calibre, sans-serif',
-                                 fontWeight: '100',
-                                 color: '#d8cdce'
-                               }}>
-                      "{testimonials[currentTestimonial].text}"
-                    </blockquote>
-                    <div>
-                      <p className="text-lg font-bold"
-                         style={{
-                           fontFamily: 'Inter, sans-serif',
-                           fontWeight: '900',
-                           color: '#d8cdce'
-                         }}>
-                        {testimonials[currentTestimonial].author}
-                      </p>
-                      <p className="font-medium"
-                         style={{
-                           fontFamily: 'Calibre, sans-serif',
-                           fontWeight: '100',
-                           color: '#d8cdce'
-                         }}>
-                        {testimonials[currentTestimonial].role}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            </AnimatePresence>
+                    
+                    <CardContent className="p-6">
+                      {/* Star Rating */}
+                      <div className="flex justify-start mb-4">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Star key={i} className="h-4 w-4 text-yellow-500 fill-current" />
+                        ))}
+                      </div>
+                      
+                      {/* Testimonial Text */}
+                      <blockquote className="leading-relaxed"
+                                 style={{
+                                   fontFamily: 'Calibre, sans-serif',
+                                   fontWeight: '100',
+                                   color: '#171311',
+                                   fontSize: '0.9rem'
+                                 }}>
+                        "{testimonial.text}"
+                      </blockquote>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
 
-            <div className="flex justify-center mt-8 space-x-4">
+            {/* Navigation Controls */}
+            <div className="flex justify-center mt-12 space-x-4">
               <Button
                 variant="outline"
                 size="lg"
                 onClick={prevTestimonial}
                 className="p-3 rounded-full"
-                style={{ borderColor: '#d8cdce', color: '#d8cdce', backgroundColor: 'transparent' }}
+                style={{ borderColor: '#171311', color: '#171311', backgroundColor: 'transparent' }}
               >
                 <ChevronLeft className="h-5 w-5" />
               </Button>
@@ -856,7 +882,7 @@ const Index = () => {
                 size="lg"
                 onClick={nextTestimonial}
                 className="p-3 rounded-full"
-                style={{ borderColor: '#d8cdce', color: '#d8cdce', backgroundColor: 'transparent' }}
+                style={{ borderColor: '#171311', color: '#171311', backgroundColor: 'transparent' }}
               >
                 <ChevronRight className="h-5 w-5" />
               </Button>
@@ -1017,7 +1043,7 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-16" style={{ backgroundColor: '#24180e', color: '#d8cdce' }}>
+      <footer className="py-16" style={{ backgroundColor: '#171311', color: '#d8cdce' }}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-12">
             <div>
