@@ -171,7 +171,7 @@
   }
   
   .card-feature {
-    @apply bg-gradient-to-br from-card/90 to-card/60 backdrop-blur-md border border-border/30 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-[1.02];
+    @apply bg-gradient-to-br from-card/90 to-card/60 backdrop-blur-md border border-border/30 rounded-3xl shadow-2xl hover:shadow-2xl transition-all duration-700 hover:scale-[1.02];
   }
   
   /* Button styles matching the reference aesthetic */
