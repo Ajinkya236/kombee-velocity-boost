@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -231,7 +230,8 @@ const Index = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')`
+            backgroundImage: `url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')`,
+            opacity: 0.8
           }}
         />
         <div className="absolute inset-0 hero-overlay" />
@@ -247,7 +247,7 @@ const Index = () => {
             transition={{ duration: 1.2, delay: 0.2 }}
           >
             Scale Your Team with{' '}
-            <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">
+            <span className="text-white font-black">
               Kombee's
             </span>{' '}
             Vetted Experts
@@ -301,7 +301,7 @@ const Index = () => {
       </section>
 
       {/* Challenges Section */}
-      <section id="challenges" className="section-padding gradient-warm dark:gradient-warm-dark">
+      <section id="challenges" className="section-padding bg-gradient-to-br from-stone-50 to-stone-100 dark:from-stone-900 dark:to-stone-800">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             className="text-center mb-20"
@@ -310,65 +310,179 @@ const Index = () => {
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-headline mb-6">
-              The Challenges We Solve
+            <h2 className="text-4xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-6">
+              Challenges We Solve
             </h2>
-            <p className="text-subheadline">
-              Flexible Tech Hiring. Delivery Pods. Plug-and-Play Talent.
+            <p className="text-xl text-stone-600 dark:text-stone-400 max-w-3xl mx-auto">
+              Streamlined solutions for modern tech hiring challenges
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <Clock className="h-8 w-8" />,
-                problem: "Slow hiring processes",
-                solution: "Onboard fully vetted experts in 5–7 business days."
-              },
-              {
-                icon: <TrendingUp className="h-8 w-8" />,
-                problem: "Rising costs",
-                solution: "Flexible, transparent engagement models that lower fixed overheads."
-              },
-              {
-                icon: <Users className="h-8 w-8" />,
-                problem: "Limited in-house bandwidth",
-                solution: "Augment your team without disrupting your internal operations."
-              },
-              {
-                icon: <Shield className="h-8 w-8" />,
-                problem: "Poor fit or domain mismatch",
-                solution: "All professionals are screened for domain alignment and delivery mindset."
-              },
-              {
-                icon: <Sparkles className="h-8 w-8" />,
-                problem: "Time zone or communication gaps",
-                solution: "Smooth collaboration with overlapping work hours and responsive communication built-in."
-              }
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 60 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="group"
-              >
-                <Card className="card-feature h-full">
-                  <CardContent className="p-8">
-                    <div className="text-primary mb-6 group-hover:scale-110 transition-transform duration-500">
-                      {item.icon}
+            {/* Challenge 1 - Slow hiring processes */}
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="group"
+            >
+              <Card className="bg-white/80 dark:bg-stone-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden h-full">
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    alt="Fast hiring process"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  <div className="absolute top-4 left-4">
+                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+                      <Clock className="h-6 w-6 text-white" />
                     </div>
-                    <h3 className="text-xl font-bold text-foreground mb-4">
-                      {item.problem}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {item.solution}
-                    </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+                  </div>
+                </div>
+                <CardContent className="p-6">
+                  <h3 className="text-lg font-medium text-stone-700 dark:text-stone-300 mb-3">
+                    Slow hiring processes
+                  </h3>
+                  <p className="text-stone-900 dark:text-stone-100 font-bold text-base leading-relaxed">
+                    Onboard fully vetted experts in 5–7 business days.
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Challenge 2 - Rising costs */}
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="group"
+            >
+              <Card className="bg-white/80 dark:bg-stone-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden h-full">
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    alt="Cost optimization"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  <div className="absolute top-4 left-4">
+                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+                      <TrendingUp className="h-6 w-6 text-white" />
+                    </div>
+                  </div>
+                </div>
+                <CardContent className="p-6">
+                  <h3 className="text-lg font-medium text-stone-700 dark:text-stone-300 mb-3">
+                    Rising costs
+                  </h3>
+                  <p className="text-stone-900 dark:text-stone-100 font-bold text-base leading-relaxed">
+                    Flexible, transparent engagement models that lower fixed overheads.
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Challenge 3 - Limited in-house bandwidth */}
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="group"
+            >
+              <Card className="bg-white/80 dark:bg-stone-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden h-full">
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    alt="Team collaboration"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  <div className="absolute top-4 left-4">
+                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+                      <Users className="h-6 w-6 text-white" />
+                    </div>
+                  </div>
+                </div>
+                <CardContent className="p-6">
+                  <h3 className="text-lg font-medium text-stone-700 dark:text-stone-300 mb-3">
+                    Limited in-house bandwidth
+                  </h3>
+                  <p className="text-stone-900 dark:text-stone-100 font-bold text-base leading-relaxed">
+                    Augment your team without disrupting your internal operations.
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Challenge 4 - Poor fit or domain mismatch */}
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="group"
+            >
+              <Card className="bg-white/80 dark:bg-stone-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden h-full">
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    alt="Professional screening"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  <div className="absolute top-4 left-4">
+                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+                      <Shield className="h-6 w-6 text-white" />
+                    </div>
+                  </div>
+                </div>
+                <CardContent className="p-6">
+                  <h3 className="text-lg font-medium text-stone-700 dark:text-stone-300 mb-3">
+                    Poor fit or domain mismatch
+                  </h3>
+                  <p className="text-stone-900 dark:text-stone-100 font-bold text-base leading-relaxed">
+                    All professionals are screened for domain alignment and delivery mindset.
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Challenge 5 - Time zone or communication gaps */}
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              viewport={{ once: true }}
+              className="group md:col-span-2 lg:col-span-1"
+            >
+              <Card className="bg-white/80 dark:bg-stone-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden h-full">
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    alt="Global communication"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  <div className="absolute top-4 left-4">
+                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+                      <Sparkles className="h-6 w-6 text-white" />
+                    </div>
+                  </div>
+                </div>
+                <CardContent className="p-6">
+                  <h3 className="text-lg font-medium text-stone-700 dark:text-stone-300 mb-3">
+                    Time zone or communication gaps
+                  </h3>
+                  <p className="text-stone-900 dark:text-stone-100 font-bold text-base leading-relaxed">
+                    Smooth collaboration with overlapping work hours and responsive communication built-in.
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
         </div>
       </section>
