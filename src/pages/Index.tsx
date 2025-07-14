@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -26,6 +27,8 @@ import {
   Award
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
+import ConsultationDialog from '@/components/ConsultationDialog';
 
 const Index = () => {
   const [isNavVisible, setIsNavVisible] = useState(true);
@@ -34,7 +37,9 @@ const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeChallengeIndex, setActiveChallengeIndex] = useState(0);
   const [currentRoleSlide, setCurrentRoleSlide] = useState(0);
+  const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const { scrollY } = useScroll();
   const heroOpacity = useTransform(scrollY, [0, 500], [1, 0]);
@@ -51,10 +56,8 @@ const Index = () => {
         const currentScrollY = window.scrollY;
         
         if (currentScrollY > lastScrollY && currentScrollY > 100) {
-          // Scrolling down
           setIsNavVisible(false);
         } else if (currentScrollY < lastScrollY) {
-          // Scrolling up
           setIsNavVisible(true);
         }
         
@@ -94,30 +97,9 @@ const Index = () => {
     }
   ];
 
-  // Handle scroll-based challenge highlighting
-  useEffect(() => {
-    const handleScroll = () => {
-      const challengeElements = document.querySelectorAll('[data-challenge-index]');
-      let activeIndex = 0;
-      
-      challengeElements.forEach((element, index) => {
-        const rect = element.getBoundingClientRect();
-        const isInView = rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
-        if (isInView) {
-          activeIndex = index;
-        }
-      });
-      
-      setActiveChallengeIndex(activeIndex);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const testimonials = [
     {
-      text: "Kombee delivered exactly what we needed - senior developers who integrated seamlessly into our workflow. The 5-day turnaround was incredible.",
+      text: "Kombee delivered exactly what we needed - senior developers who integrated seamlessly into our workflow. The 5-day turnaround was incredible. They understood our technical requirements immediately and delivered high-quality code that exceeded our expectations. Our project timelines were cut in half.",
       author: "Sarah Chen",
       role: "CTO at TechFlow",
       rating: 5,
@@ -125,7 +107,7 @@ const Index = () => {
       image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
     },
     {
-      text: "Their vetted analysts helped us define our product roadmap clearly. The quality of talent and communication exceeded our expectations.",
+      text: "Their vetted analysts helped us define our product roadmap clearly. The quality of talent and communication exceeded our expectations. They brought fresh perspectives and industry best practices that transformed our approach. The ROI was visible within the first month of engagement.",
       author: "Michael Rodriguez",
       role: "Product Director at InnovateLab",
       rating: 5,
@@ -133,7 +115,7 @@ const Index = () => {
       image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
     },
     {
-      text: "We scaled our design team 3x in just two weeks with Kombee. The designers understood our brand immediately and delivered outstanding work.",
+      text: "We scaled our design team 3x in just two weeks with Kombee. The designers understood our brand immediately and delivered outstanding work. Their design system expertise helped us establish consistency across all our products. Truly exceptional talent pool.",
       author: "Emma Thompson",
       role: "Design Lead at Creative Solutions",
       rating: 5,
@@ -211,10 +193,7 @@ const Index = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Thank you!",
-      description: "We'll get back to you within 24 hours to discuss your team needs.",
-    });
+    navigate('/success');
   };
 
   const nextTestimonial = () => {
@@ -337,7 +316,7 @@ const Index = () => {
               size="lg"
               className="btn-primary text-lg group"
               style={{ fontFamily: 'Calibre, sans-serif', fontWeight: '100' }}
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => setIsConsultationOpen(true)}
             >
               Get Started Now
               <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -352,6 +331,7 @@ const Index = () => {
                 fontFamily: 'Calibre, sans-serif',
                 fontWeight: '100'
               }}
+              onClick={() => navigate('/demo')}
             >
               <Play className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform" />
               Watch Demo
@@ -438,13 +418,17 @@ const Index = () => {
                   </div>
                 </div>
                 <div className={`relative ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                  <div className="aspect-square rounded-3xl overflow-hidden">
+                  <motion.div 
+                    className="aspect-square rounded-3xl overflow-hidden"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <img 
                       src={challenge.image}
                       alt={`Solution for ${challenge.problem}`}
                       className="w-full h-full object-cover"
                     />
-                  </div>
+                  </motion.div>
                 </div>
               </motion.div>
             ))}
@@ -499,6 +483,7 @@ const Index = () => {
                           transition={{ duration: 0.8, delay: index * 0.1 }}
                           viewport={{ once: true }}
                           className="group"
+                          whileHover={{ y: -10 }}
                         >
                           <Card className="card-modern h-full group-hover:shadow-2xl overflow-hidden" style={{ backgroundColor: '#24180e', border: '1px solid #d8cdce' }}>
                             <div className="aspect-video overflow-hidden">
@@ -647,6 +632,7 @@ const Index = () => {
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     viewport={{ once: true }}
                     className="space-y-4"
+                    whileHover={{ scale: 1.05 }}
                   >
                     <div style={{ color: '#d8cdce' }}>
                       {feature.icon}
@@ -674,13 +660,17 @@ const Index = () => {
 
             {/* Right side - Image */}
             <div className="relative">
-              <div className="aspect-[4/3] rounded-3xl overflow-hidden">
+              <motion.div 
+                className="aspect-[4/3] rounded-3xl overflow-hidden"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
                 <img 
                   src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                   alt="Professional working"
                   className="w-full h-full object-cover"
                 />
-              </div>
+              </motion.div>
             </div>
           </motion.div>
 
@@ -714,6 +704,7 @@ const Index = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 className="text-center"
+                whileHover={{ scale: 1.1 }}
               >
                 <div className="mb-4"
                      style={{
@@ -759,70 +750,75 @@ const Index = () => {
           </motion.div>
 
           <div className="relative max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-8">
-              {testimonials.map((testimonial, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 60 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                  className="relative"
-                >
-                  <Card className="overflow-hidden h-full" style={{ backgroundColor: '#171311', border: 'none' }}>
-                    {/* Background Image */}
-                    <div className="aspect-[4/3] overflow-hidden relative">
-                      <img 
-                        src={testimonial.image}
-                        alt={testimonial.author}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                      
-                      {/* Author Info Overlay */}
-                      <div className="absolute bottom-4 left-4 right-4">
-                        <div className="flex items-center mb-3">
-                          <div className="w-8 h-8 rounded-full flex items-center justify-center mr-3" style={{ backgroundColor: '#d8cdce' }}>
-                            <span className="text-xs font-bold" style={{ color: '#171311' }}>
-                              {testimonial.company.charAt(0)}
-                            </span>
-                          </div>
-                          <div>
-                            <p className="font-bold text-white text-sm"
-                               style={{ fontFamily: 'Inter, sans-serif', fontWeight: '900' }}>
-                              {testimonial.author}
-                            </p>
-                            <p className="text-white/80 text-xs"
-                               style={{ fontFamily: 'Calibre, sans-serif', fontWeight: '100' }}>
-                              {testimonial.company.toUpperCase()}
-                            </p>
+            <div className="overflow-hidden">
+              <motion.div
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${currentTestimonial * 33.333}%)` }}
+              >
+                {testimonials.map((testimonial, index) => (
+                  <motion.div
+                    key={index}
+                    className="w-1/3 flex-shrink-0 px-4"
+                    initial={{ opacity: 0, y: 60 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: index * 0.2 }}
+                    viewport={{ once: true }}
+                  >
+                    <Card className="overflow-hidden h-full" style={{ backgroundColor: '#171311', border: 'none' }}>
+                      {/* Background Image */}
+                      <div className="aspect-[4/3] overflow-hidden relative">
+                        <img 
+                          src={testimonial.image}
+                          alt={testimonial.author}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                        
+                        {/* Author Info Overlay */}
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <div className="flex items-center mb-3">
+                            <div className="w-8 h-8 rounded-full flex items-center justify-center mr-3" style={{ backgroundColor: '#d8cdce' }}>
+                              <span className="text-xs font-bold" style={{ color: '#171311' }}>
+                                {testimonial.company.charAt(0)}
+                              </span>
+                            </div>
+                            <div>
+                              <p className="font-bold text-white text-sm"
+                                 style={{ fontFamily: 'Inter, sans-serif', fontWeight: '900' }}>
+                                {testimonial.author}
+                              </p>
+                              <p className="text-white/80 text-xs"
+                                 style={{ fontFamily: 'Calibre, sans-serif', fontWeight: '100' }}>
+                                {testimonial.company.toUpperCase()}
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    
-                    <CardContent className="p-6">
-                      {/* Star Rating */}
-                      <div className="flex justify-start mb-4">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star key={i} className="h-4 w-4 text-yellow-500 fill-current" />
-                        ))}
-                      </div>
                       
-                      {/* Testimonial Text */}
-                      <blockquote className="leading-relaxed"
-                                 style={{
-                                   fontFamily: 'Calibre, sans-serif',
-                                   fontWeight: '100',
-                                   color: '#171311',
-                                   fontSize: '0.9rem'
-                                 }}>
-                        "{testimonial.text}"
-                      </blockquote>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
+                      <CardContent className="p-6">
+                        {/* Star Rating */}
+                        <div className="flex justify-start mb-4">
+                          {[...Array(testimonial.rating)].map((_, i) => (
+                            <Star key={i} className="h-4 w-4 text-yellow-500 fill-current" />
+                          ))}
+                        </div>
+                        
+                        {/* Testimonial Text */}
+                        <blockquote className="leading-relaxed"
+                                   style={{
+                                     fontFamily: 'Calibre, sans-serif',
+                                     fontWeight: '100',
+                                     color: '#171311',
+                                     fontSize: '0.9rem'
+                                   }}>
+                          "{testimonial.text}"
+                        </blockquote>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </motion.div>
             </div>
 
             {/* Navigation Controls */}
@@ -884,17 +880,24 @@ const Index = () => {
                   "Flexible engagement models",
                   "Ongoing support & management"
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                    <span className="font-medium"
+                  <motion.div 
+                    key={index} 
+                    className="flex items-center"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <CheckCircle className="h-5 w-5 mr-3 flex-shrink-0 font-bold" style={{ color: '#171311' }} />
+                    <span className="font-bold"
                           style={{
-                            fontFamily: 'Calibre, sans-serif',
-                            fontWeight: '100',
+                            fontFamily: 'Inter, sans-serif',
+                            fontWeight: '900',
                             color: '#24180e'
                           }}>
                       {item}
                     </span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -1004,7 +1007,13 @@ const Index = () => {
       {/* Footer */}
       <footer className="py-16" style={{ backgroundColor: '#171311', color: '#d8cdce' }}>
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-12">
+          <motion.div
+            className="grid md:grid-cols-4 gap-12"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
             <div>
               <h3 className="text-2xl mb-6"
                   style={{
@@ -1077,7 +1086,7 @@ const Index = () => {
                 <li>San Francisco, CA</li>
               </ul>
             </div>
-          </div>
+          </motion.div>
           <div className="border-t mt-12 pt-8 text-center"
                style={{ 
                  borderColor: '#d8cdce',
@@ -1088,6 +1097,12 @@ const Index = () => {
           </div>
         </div>
       </footer>
+
+      {/* Consultation Dialog */}
+      <ConsultationDialog 
+        isOpen={isConsultationOpen}
+        onClose={() => setIsConsultationOpen(false)}
+      />
     </div>
   );
 };
