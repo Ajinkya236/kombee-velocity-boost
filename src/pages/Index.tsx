@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -37,6 +38,8 @@ const Index = () => {
   const [activeChallengeIndex, setActiveChallengeIndex] = useState(0);
   const [currentRoleSlide, setCurrentRoleSlide] = useState(0);
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
+  const [scrollDirection, setScrollDirection] = useState('down');
+  const [hasScrolledOnce, setHasScrolledOnce] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -54,6 +57,16 @@ const Index = () => {
       if (typeof window !== 'undefined') {
         const currentScrollY = window.scrollY;
         
+        // Track scroll direction
+        if (currentScrollY > lastScrollY) {
+          setScrollDirection('down');
+          if (!hasScrolledOnce) {
+            setHasScrolledOnce(true);
+          }
+        } else if (currentScrollY < lastScrollY) {
+          setScrollDirection('up');
+        }
+        
         if (currentScrollY > lastScrollY && currentScrollY > 100) {
           setIsNavVisible(false);
         } else if (currentScrollY < lastScrollY) {
@@ -66,7 +79,74 @@ const Index = () => {
 
     window.addEventListener('scroll', controlNavbar);
     return () => window.removeEventListener('scroll', controlNavbar);
-  }, [lastScrollY]);
+  }, [lastScrollY, hasScrolledOnce]);
+
+  // Animation variants for different sections
+  const sectionVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 100,
+      scale: 0.9,
+      rotateX: 15
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      scale: 1,
+      rotateX: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94],
+        staggerChildren: 0.1
+      }
+    },
+    exit: {
+      opacity: 0,
+      y: -50,
+      scale: 1.1,
+      rotateX: -10,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { 
+      opacity: 0, 
+      x: scrollDirection === 'down' ? 50 : -50,
+      scale: 0.8
+    },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 60,
+      rotateY: scrollDirection === 'down' ? 15 : -15,
+      scale: 0.9
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      rotateY: 0,
+      scale: 1,
+      transition: {
+        duration: 0.7,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
 
   const challenges = [
     {
@@ -306,7 +386,13 @@ const Index = () => {
       </motion.nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <motion.section 
+        className="relative min-h-screen flex items-center justify-center overflow-hidden"
+        variants={sectionVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+      >
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -319,6 +405,7 @@ const Index = () => {
         <motion.div
           className="relative z-10 max-w-7xl mx-auto px-6 text-center text-white"
           style={{ opacity: heroOpacity, scale: heroScale }}
+          variants={itemVariants}
         >
           <motion.h1
             className="text-white mb-8"
@@ -387,18 +474,24 @@ const Index = () => {
             </Button>
           </motion.div>
         </motion.div>
-      </section>
+      </motion.section>
 
       {/* Challenges Section */}
-      <section id="challenges" className="py-20 sm:py-32 lg:py-40" style={{ backgroundColor: '#171311' }}>
+      <motion.section 
+        id="challenges" 
+        className="py-20 sm:py-32 lg:py-40" 
+        style={{ backgroundColor: '#171311' }}
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: false, margin: "-20%" }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           {/* Section Header */}
           <motion.div
             className="text-center mb-20 sm:mb-32"
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
+            variants={itemVariants}
           >
             <h2 className="mb-6 sm:mb-8 leading-tight tracking-tight" 
                 style={{ 
@@ -436,15 +529,18 @@ const Index = () => {
               <motion.div
                 key={index}
                 data-challenge-index={index}
-                initial={{ opacity: 0, y: 60 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                viewport={{ once: true, margin: "-20%" }}
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false, margin: "-20%" }}
                 className={`grid lg:grid-cols-2 gap-12 sm:gap-20 items-center ${
                   index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
                 }`}
               >
-                <div className={`space-y-6 sm:space-y-8 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                <motion.div 
+                  className={`space-y-6 sm:space-y-8 ${index % 2 === 1 ? 'lg:order-2' : ''}`}
+                  variants={itemVariants}
+                >
                   <div>
                     <h3 className="mb-4 sm:mb-6 tracking-tight" 
                         style={{ 
@@ -465,11 +561,14 @@ const Index = () => {
                       {challenge.solution}
                     </p>
                   </div>
-                </div>
-                <div className={`relative ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                </motion.div>
+                <motion.div 
+                  className={`relative ${index % 2 === 1 ? 'lg:order-1' : ''}`}
+                  variants={itemVariants}
+                >
                   <motion.div 
                     className="aspect-square rounded-2xl sm:rounded-3xl overflow-hidden"
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={{ scale: 1.05, rotateY: 5 }}
                     transition={{ duration: 0.3 }}
                   >
                     <img 
@@ -478,22 +577,28 @@ const Index = () => {
                       className="w-full h-full object-cover"
                     />
                   </motion.div>
-                </div>
+                </motion.div>
               </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Roles Section with Carousel - Enhanced Mobile View */}
-      <section id="roles" className="py-20 sm:py-32 lg:py-40" style={{ backgroundColor: '#d8cdce' }}>
+      <motion.section 
+        id="roles" 
+        className="py-20 sm:py-32 lg:py-40" 
+        style={{ backgroundColor: '#d8cdce' }}
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: false, margin: "-20%" }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div
             className="text-center mb-16 sm:mb-20"
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
+            variants={itemVariants}
           >
             <h2 className="mb-4 sm:mb-6" 
                 style={{ 
@@ -527,12 +632,12 @@ const Index = () => {
                       {slideRoles.map((role, index) => (
                         <motion.div
                           key={index}
-                          initial={{ opacity: 0, y: 60 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.8, delay: index * 0.1 }}
-                          viewport={{ once: true }}
+                          variants={cardVariants}
+                          initial="hidden"
+                          whileInView="visible"
+                          viewport={{ once: false }}
                           className="group"
-                          whileHover={{ y: -10 }}
+                          whileHover={{ y: -10, rotateY: 3 }}
                         >
                           <Card className="card-modern h-full group-hover:shadow-2xl overflow-hidden" style={{ backgroundColor: '#171311', border: '1px solid #d8cdce' }}>
                             <div className="aspect-video overflow-hidden">
@@ -630,20 +735,25 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Why Companies Choose Kombee - Redesigned */}
-      <section className="py-20 sm:py-32 lg:py-40" style={{ backgroundColor: '#171311' }}>
+      <motion.section 
+        className="py-20 sm:py-32 lg:py-40" 
+        style={{ backgroundColor: '#171311' }}
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: false, margin: "-20%" }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div
             className="grid lg:grid-cols-2 gap-12 sm:gap-16 items-stretch"
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
+            variants={itemVariants}
           >
             {/* Left side - Main content */}
-            <div className="space-y-6 sm:space-y-8">
+            <motion.div className="space-y-6 sm:space-y-8" variants={itemVariants}>
               <div>
                 <h2 className="mb-6 sm:mb-8 leading-tight"
                     style={{
@@ -681,12 +791,12 @@ const Index = () => {
                 ].map((feature, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    viewport={{ once: true }}
+                    variants={cardVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false }}
                     className="space-y-3 sm:space-y-4"
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={{ scale: 1.05, x: 10 }}
                   >
                     <div style={{ color: '#d8cdce' }}>
                       {feature.icon}
@@ -710,13 +820,13 @@ const Index = () => {
                   </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
             {/* Right side - Image */}
-            <div className="relative mt-8 lg:mt-0">
+            <motion.div className="relative mt-8 lg:mt-0" variants={itemVariants}>
               <motion.div 
                 className="aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden"
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.02, rotateY: 5 }}
                 transition={{ duration: 0.3 }}
               >
                 <img 
@@ -725,17 +835,14 @@ const Index = () => {
                   className="w-full h-full object-cover"
                 />
               </motion.div>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Stats Section */}
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 mt-16 sm:mt-20 pt-16 sm:pt-20 border-t"
             style={{ borderColor: '#d8cdce' }}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            variants={itemVariants}
           >
             {[
               {
@@ -753,12 +860,12 @@ const Index = () => {
             ].map((item, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false }}
                 className="text-center"
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.1, y: -5 }}
               >
                 <div className="mb-3 sm:mb-4"
                      style={{
@@ -780,17 +887,23 @@ const Index = () => {
             ))}
           </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Testimonials - Enhanced Mobile View */}
-      <section id="testimonials" className="py-20 sm:py-32 lg:py-40" style={{ backgroundColor: '#d8cdce' }}>
+      <motion.section 
+        id="testimonials" 
+        className="py-20 sm:py-32 lg:py-40" 
+        style={{ backgroundColor: '#d8cdce' }}
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: false, margin: "-20%" }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div
             className="text-center mb-16 sm:mb-20"
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
+            variants={itemVariants}
           >
             <h2 className="mb-4 sm:mb-6"
                 style={{
@@ -818,10 +931,10 @@ const Index = () => {
                       getCardsPerSlide() === 1 ? 'w-full' : 
                       getCardsPerSlide() === 2 ? 'w-1/2' : 'w-1/3'
                     }`}
-                    initial={{ opacity: 0, y: 60 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: index * 0.2 }}
-                    viewport={{ once: true }}
+                    variants={cardVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false }}
                   >
                     <Card className="overflow-hidden h-full" style={{ backgroundColor: '#171311', border: 'none' }}>
                       {/* Background Image */}
@@ -903,17 +1016,23 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* CTA Section */}
-      <section id="contact" className="py-20 sm:py-32 lg:py-40" style={{ backgroundColor: '#d8cdce' }}>
+      <motion.section 
+        id="contact" 
+        className="py-20 sm:py-32 lg:py-40" 
+        style={{ backgroundColor: '#d8cdce' }}
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: false, margin: "-20%" }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-12 sm:gap-16 items-center">
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1 }}
-              viewport={{ once: true }}
+              variants={itemVariants}
             >
               <h2 className="mb-6 sm:mb-8"
                   style={{
@@ -942,10 +1061,11 @@ const Index = () => {
                   <motion.div 
                     key={index} 
                     className="flex items-center"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
+                    variants={cardVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false }}
+                    whileHover={{ x: 5 }}
                   >
                     <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 flex-shrink-0 font-bold" style={{ color: '#171311' }} />
                     <span className="font-bold text-sm sm:text-base"
@@ -962,11 +1082,8 @@ const Index = () => {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1 }}
-              viewport={{ once: true }}
               className="mt-8 lg:mt-0"
+              variants={itemVariants}
             >
               <Card className="card-feature" style={{ backgroundColor: '#24180e', border: '1px solid #d8cdce' }}>
                 <CardContent className="p-6 sm:p-8">
@@ -1062,17 +1179,22 @@ const Index = () => {
             </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Footer */}
-      <footer className="py-12 sm:py-16" style={{ backgroundColor: '#171311', color: '#d8cdce' }}>
+      <motion.footer 
+        className="py-12 sm:py-16" 
+        style={{ backgroundColor: '#171311', color: '#d8cdce' }}
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: false, margin: "-20%" }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            variants={itemVariants}
           >
             <div>
               <h3 className="text-xl sm:text-2xl mb-4 sm:mb-6"
@@ -1156,7 +1278,7 @@ const Index = () => {
             <p>&copy; 2024 Kombee. All rights reserved.</p>
           </div>
         </div>
-      </footer>
+      </motion.footer>
 
       {/* Consultation Dialog */}
       <ConsultationDialog 
