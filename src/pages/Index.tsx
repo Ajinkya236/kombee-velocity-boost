@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -359,17 +358,6 @@ const Index = () => {
             </Button>
           </motion.div>
         </motion.div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/70"
-          animate={{ y: [0, 15, 0] }}
-          transition={{ duration: 2.5, repeat: Infinity }}
-        >
-          <div className="w-8 h-12 border-2 border-white/50 rounded-full flex justify-center">
-            <div className="w-1.5 h-4 bg-white/50 rounded-full mt-3"></div>
-          </div>
-        </motion.div>
       </section>
 
       {/* Challenges Section */}
@@ -411,35 +399,6 @@ const Index = () => {
               Plug-and-Play Talent
             </p>
             <div className="w-32 h-1.5 mx-auto rounded-full" style={{ backgroundColor: '#d8cdce' }}></div>
-          </motion.div>
-
-          {/* Challenge Navigation Menu */}
-          <motion.div
-            className="flex justify-center mb-20"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <div className="flex space-x-2 bg-white/20 rounded-full p-1.5 backdrop-blur-sm">
-              {challenges.map((_, index) => (
-                <button
-                  key={index}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    activeChallengeIndex === index 
-                      ? 'scale-125' 
-                      : 'hover:bg-white/50'
-                  }`}
-                  style={{ 
-                    backgroundColor: activeChallengeIndex === index ? '#d8cdce' : 'rgba(255,255,255,0.3)'
-                  }}
-                  onClick={() => {
-                    const element = document.querySelector(`[data-challenge-index="${index}"]`);
-                    element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                  }}
-                />
-              ))}
-            </div>
           </motion.div>
 
           {/* Challenges Grid */}
