@@ -52,7 +52,7 @@
   }
 
   .dark {
-    /* Dark theme with warm undertones */
+    /* Dark theme with warm undertones - replaced light brown with cream colors */
     --background: 20 15% 8%;
     --foreground: 32 25% 95%;
 
@@ -62,7 +62,7 @@
     --popover: 20 15% 10%;
     --popover-foreground: 32 25% 95%;
 
-    --primary: 28 35% 45%;
+    --primary: 32 20% 85%; /* Changed from brown to cream */
     --primary-foreground: 20 15% 8%;
 
     --secondary: 20 12% 18%;
@@ -79,16 +79,16 @@
 
     --border: 20 12% 18%;
     --input: 20 12% 18%;
-    --ring: 28 35% 45%;
+    --ring: 32 20% 85%; /* Changed from brown to cream */
 
     --sidebar-background: 20 15% 8%;
     --sidebar-foreground: 32 25% 95%;
-    --sidebar-primary: 28 35% 45%;
+    --sidebar-primary: 32 20% 85%; /* Changed from brown to cream */
     --sidebar-primary-foreground: 20 15% 8%;
     --sidebar-accent: 20 12% 18%;
     --sidebar-accent-foreground: 32 25% 95%;
     --sidebar-border: 20 12% 18%;
-    --sidebar-ring: 28 35% 45%;
+    --sidebar-ring: 32 20% 85%; /* Changed from brown to cream */
   }
 }
 
@@ -151,7 +151,7 @@
       hsl(20, 15%, 8%) 0%, 
       hsl(20, 12%, 12%) 25%,
       hsl(20, 10%, 15%) 50%,
-      hsl(18, 8%, 18%) 100%);
+      hsl(32, 20%, 85%) 100%); /* Changed end color to cream */
   }
   
   /* Glass morphism inspired by modern design */

@@ -223,18 +223,13 @@ const Index = () => {
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <motion.div 
-            className="text-2xl font-black text-primary"
+            className="text-3xl font-black text-primary tracking-tight"
+            style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}
             whileHover={{ scale: 1.05 }}
           >
             Kombee
           </motion.div>
           
-          <div className="hidden md:flex items-center space-x-8">
-            <a href="#roles" className="text-foreground/80 hover:text-primary transition-colors font-medium">Talent</a>
-            <a href="#testimonials" className="text-foreground/80 hover:text-primary transition-colors font-medium">Reviews</a>
-            <a href="#contact" className="text-foreground/80 hover:text-primary transition-colors font-medium">Contact</a>
-          </div>
-
           <div className="flex items-center space-x-4">
             <Button
               variant="ghost"
@@ -255,24 +250,6 @@ const Index = () => {
             </Button>
           </div>
         </div>
-
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden nav-glass border-t border-border/30"
-            >
-              <div className="px-6 py-4 space-y-4">
-                <a href="#roles" className="block text-foreground/80 hover:text-primary transition-colors font-medium">Talent</a>
-                <a href="#testimonials" className="block text-foreground/80 hover:text-primary transition-colors font-medium">Reviews</a>
-                <a href="#contact" className="block text-foreground/80 hover:text-primary transition-colors font-medium">Contact</a>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </motion.nav>
 
       {/* Hero Section */}
@@ -351,7 +328,7 @@ const Index = () => {
       </section>
 
       {/* Challenges Section */}
-      <section id="challenges" className="py-32 lg:py-40 bg-background">
+      <section id="challenges" className="py-32 lg:py-40 bg-background dark:bg-orange-50">
         <div className="max-w-7xl mx-auto px-6">
           {/* Section Header */}
           <motion.div
@@ -415,10 +392,10 @@ const Index = () => {
               >
                 <div className={`space-y-8 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
                   <div>
-                    <h3 className="text-3xl md:text-4xl font-black text-foreground mb-6 tracking-tight" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    <h3 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight" style={{ fontFamily: 'Inter, sans-serif' }}>
                       {challenge.problem}
                     </h3>
-                    <p className="text-2xl md:text-3xl font-black text-foreground leading-relaxed tracking-tight" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    <p className="text-2xl md:text-2xl font-bold text-foreground leading-relaxed tracking-tight" style={{ fontFamily: 'Inter, sans-serif' }}>
                       {challenge.solution}
                     </p>
                   </div>
