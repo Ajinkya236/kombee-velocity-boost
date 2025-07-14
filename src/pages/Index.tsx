@@ -837,7 +837,7 @@ const Index = () => {
                                    style={{
                                      fontFamily: 'Calibre, sans-serif',
                                      fontWeight: '100',
-                                     color: '#171311',
+                                     color: '#d8cdce',
                                      fontSize: '0.9rem'
                                    }}>
                           "{testimonial.text}"
