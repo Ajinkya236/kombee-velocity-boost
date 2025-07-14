@@ -23,7 +23,10 @@ import {
   Play,
   Eye,
   Target,
-  Lightbulb
+  Lightbulb,
+  Sparkles,
+  TrendingUp,
+  Award
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -36,8 +39,8 @@ const Index = () => {
   const { toast } = useToast();
 
   const { scrollY } = useScroll();
-  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0]);
-  const heroScale = useTransform(scrollY, [0, 400], [1, 0.8]);
+  const heroOpacity = useTransform(scrollY, [0, 500], [1, 0]);
+  const heroScale = useTransform(scrollY, [0, 500], [1, 0.95]);
 
   useEffect(() => {
     const controlNavbar = () => {
@@ -52,7 +55,7 @@ const Index = () => {
     };
 
     window.addEventListener('scroll', controlNavbar);
-    return () => window.addEventListener('scroll', controlNavbar);
+    return () => window.removeEventListener('scroll', controlNavbar);
   }, [lastScrollY]);
 
   useEffect(() => {
@@ -160,27 +163,27 @@ const Index = () => {
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'dark' : ''}`}>
+    <div className={`min-h-screen transition-colors duration-500 ${isDark ? 'dark' : ''}`}>
       {/* Navigation */}
       <motion.nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isNavVisible ? 'translate-y-0' : '-translate-y-full'
-        } warm-glass border-b border-amber-200/30 dark:border-amber-800/30`}
+        } nav-glass`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <motion.div 
-            className="text-2xl font-black text-amber-900 dark:text-amber-100"
+            className="text-2xl font-black text-primary"
             whileHover={{ scale: 1.05 }}
           >
             Kombee
           </motion.div>
           
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#roles" className="text-amber-800 dark:text-amber-200 hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-medium">Talent</a>
-            <a href="#testimonials" className="text-amber-800 dark:text-amber-200 hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-medium">Reviews</a>
-            <a href="#contact" className="text-amber-800 dark:text-amber-200 hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-medium">Contact</a>
+            <a href="#roles" className="text-foreground/80 hover:text-primary transition-colors font-medium">Talent</a>
+            <a href="#testimonials" className="text-foreground/80 hover:text-primary transition-colors font-medium">Reviews</a>
+            <a href="#contact" className="text-foreground/80 hover:text-primary transition-colors font-medium">Contact</a>
           </div>
 
           <div className="flex items-center space-x-4">
@@ -188,7 +191,7 @@ const Index = () => {
               variant="ghost"
               size="sm"
               onClick={() => setIsDark(!isDark)}
-              className="p-2 hover:bg-amber-200/50 dark:hover:bg-amber-800/50"
+              className="p-2 hover:bg-muted rounded-full"
             >
               {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </Button>
@@ -211,12 +214,12 @@ const Index = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden warm-glass border-t border-amber-200/30 dark:border-amber-800/30"
+              className="md:hidden nav-glass border-t border-border/30"
             >
               <div className="px-6 py-4 space-y-4">
-                <a href="#roles" className="block text-amber-800 dark:text-amber-200 hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-medium">Talent</a>
-                <a href="#testimonials" className="block text-amber-800 dark:text-amber-200 hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-medium">Reviews</a>
-                <a href="#contact" className="block text-amber-800 dark:text-amber-200 hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-medium">Contact</a>
+                <a href="#roles" className="block text-foreground/80 hover:text-primary transition-colors font-medium">Talent</a>
+                <a href="#testimonials" className="block text-foreground/80 hover:text-primary transition-colors font-medium">Reviews</a>
+                <a href="#contact" className="block text-foreground/80 hover:text-primary transition-colors font-medium">Contact</a>
               </div>
             </motion.div>
           )}
@@ -224,34 +227,35 @@ const Index = () => {
       </motion.nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden hero-background">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-30 dark:opacity-40"
+          className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage: `url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')`
           }}
         />
+        <div className="absolute inset-0 hero-overlay" />
         
         <motion.div
-          className="relative z-10 max-w-7xl mx-auto px-6 text-center"
+          className="relative z-10 max-w-7xl mx-auto px-6 text-center text-white"
           style={{ opacity: heroOpacity, scale: heroScale }}
         >
           <motion.h1
-            className="hero-text text-amber-900 dark:text-amber-100 mb-8"
-            initial={{ opacity: 0, y: 50 }}
+            className="text-display mb-8"
+            initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
+            transition={{ duration: 1.2, delay: 0.2 }}
           >
             Scale Your Team with{' '}
-            <span className="text-gradient">
+            <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">
               Kombee's
             </span>{' '}
             Vetted Experts
           </motion.h1>
           
           <motion.p
-            className="text-xl md:text-2xl text-amber-700 dark:text-amber-300 mb-12 max-w-4xl mx-auto leading-relaxed font-medium"
-            initial={{ opacity: 0, y: 30 }}
+            className="text-subheadline mb-12 max-w-4xl mx-auto text-white/90"
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.6 }}
           >
@@ -260,25 +264,25 @@ const Index = () => {
           
           <motion.div
             className="flex flex-col sm:flex-row gap-6 justify-center items-center"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1 }}
           >
             <Button
               size="lg"
-              className="bg-purple-600 hover:bg-purple-700 text-white px-12 py-6 text-xl font-bold group shadow-2xl hover:shadow-3xl transition-all duration-300"
+              className="btn-primary text-lg group"
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
             >
               Get Started Now
-              <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
+              <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
             
             <Button
               variant="outline"
               size="lg"
-              className="px-12 py-6 text-xl font-bold border-2 border-amber-300 dark:border-amber-700 hover:bg-amber-100 dark:hover:bg-amber-900 group"
+              className="btn-secondary text-lg group border-white/30 text-white hover:bg-white/10"
             >
-              <Play className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform duration-300" />
+              <Play className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform" />
               Watch Demo
             </Button>
           </motion.div>
@@ -286,30 +290,30 @@ const Index = () => {
 
         {/* Scroll Indicator */}
         <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/70"
           animate={{ y: [0, 15, 0] }}
           transition={{ duration: 2.5, repeat: Infinity }}
         >
-          <div className="w-8 h-12 border-2 border-amber-400 dark:border-amber-600 rounded-full flex justify-center">
-            <div className="w-1.5 h-4 bg-amber-400 dark:bg-amber-600 rounded-full mt-3"></div>
+          <div className="w-8 h-12 border-2 border-white/50 rounded-full flex justify-center">
+            <div className="w-1.5 h-4 bg-white/50 rounded-full mt-3"></div>
           </div>
         </motion.div>
       </section>
 
       {/* Challenges Section */}
-      <section id="challenges" className="section-padding warm-gradient-bg">
+      <section id="challenges" className="section-padding gradient-warm dark:gradient-warm-dark">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             className="text-center mb-20"
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-5xl md:text-7xl font-black text-amber-900 dark:text-amber-100 mb-8 leading-tight">
+            <h2 className="text-headline mb-6">
               The Challenges We Solve
             </h2>
-            <p className="text-2xl text-purple-600 dark:text-purple-400 font-bold">
+            <p className="text-subheadline">
               Flexible Tech Hiring. Delivery Pods. Plug-and-Play Talent.
             </p>
           </motion.div>
@@ -317,48 +321,48 @@ const Index = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                icon: <Clock className="h-10 w-10" />,
+                icon: <Clock className="h-8 w-8" />,
                 problem: "Slow hiring processes",
                 solution: "Onboard fully vetted experts in 5–7 business days."
               },
               {
-                icon: <Zap className="h-10 w-10" />,
+                icon: <TrendingUp className="h-8 w-8" />,
                 problem: "Rising costs",
                 solution: "Flexible, transparent engagement models that lower fixed overheads."
               },
               {
-                icon: <Users className="h-10 w-10" />,
+                icon: <Users className="h-8 w-8" />,
                 problem: "Limited in-house bandwidth",
                 solution: "Augment your team without disrupting your internal operations."
               },
               {
-                icon: <Shield className="h-10 w-10" />,
+                icon: <Shield className="h-8 w-8" />,
                 problem: "Poor fit or domain mismatch",
                 solution: "All professionals are screened for domain alignment and delivery mindset."
               },
               {
-                icon: <CheckCircle className="h-10 w-10" />,
+                icon: <Sparkles className="h-8 w-8" />,
                 problem: "Time zone or communication gaps",
                 solution: "Smooth collaboration with overlapping work hours and responsive communication built-in."
               }
             ].map((item, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group hover-lift"
+                className="group"
               >
-                <Card className="h-full elegant-card shadow-xl">
-                  <CardContent className="p-10">
-                    <div className="text-purple-600 dark:text-purple-400 mb-6 group-hover:scale-125 transition-transform duration-500">
+                <Card className="card-feature h-full">
+                  <CardContent className="p-8">
+                    <div className="text-primary mb-6 group-hover:scale-110 transition-transform duration-500">
                       {item.icon}
                     </div>
-                    <h3 className="text-2xl font-black text-amber-900 dark:text-amber-100 mb-4">
+                    <h3 className="text-xl font-bold text-foreground mb-4">
                       {item.problem}
                     </h3>
-                    <p className="text-amber-700 dark:text-amber-300 leading-relaxed text-lg">
+                    <p className="text-muted-foreground leading-relaxed">
                       {item.solution}
                     </p>
                   </CardContent>
@@ -370,52 +374,52 @@ const Index = () => {
       </section>
 
       {/* Roles Section */}
-      <section id="roles" className="section-padding bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/50 dark:to-orange-950/50">
+      <section id="roles" className="section-padding bg-background">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             className="text-center mb-20"
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-5xl md:text-7xl font-black text-amber-900 dark:text-amber-100 mb-8 leading-tight">
+            <h2 className="text-headline mb-6">
               Top-Tier Tech Talent Available On Demand
             </h2>
-            <p className="text-2xl text-amber-700 dark:text-amber-300 font-medium">
+            <p className="text-subheadline">
               Roles You Can Hire Through Kombee
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {roles.map((role, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group hover-lift"
+                className="group"
               >
-                <Card className="h-full elegant-card shadow-xl hover:shadow-2xl">
-                  <CardContent className="p-8">
+                <Card className="card-modern h-full group-hover:shadow-2xl">
+                  <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-6">
-                      <div className="text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform duration-300">
+                      <div className="text-primary group-hover:scale-110 transition-transform duration-300">
                         {role.icon}
                       </div>
-                      <Badge variant="secondary" className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 font-bold">
+                      <Badge variant="secondary" className="bg-muted text-muted-foreground font-semibold">
                         {role.experience}
                       </Badge>
                     </div>
-                    <h3 className="text-xl font-black text-amber-900 dark:text-amber-100 mb-4 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                    <h3 className="text-lg font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
                       {role.title}
                     </h3>
-                    <p className="text-amber-700 dark:text-amber-300 mb-6 text-sm leading-relaxed">
+                    <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
                       {role.description}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {role.skills.map((skill, skillIndex) => (
-                        <Badge key={skillIndex} variant="outline" className="text-xs border-amber-300 dark:border-amber-700">
+                        <Badge key={skillIndex} variant="outline" className="text-xs border-border/50">
                           {skill}
                         </Badge>
                       ))}
@@ -429,16 +433,16 @@ const Index = () => {
       </section>
 
       {/* Why Choose Us */}
-      <section className="section-padding warm-gradient-bg">
+      <section className="section-padding gradient-warm dark:gradient-warm-dark">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             className="text-center mb-20"
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-5xl md:text-7xl font-black text-amber-900 dark:text-amber-100 mb-8 leading-tight">
+            <h2 className="text-headline mb-6">
               Why Companies Choose Kombee
             </h2>
           </motion.div>
@@ -448,41 +452,41 @@ const Index = () => {
               {
                 title: "Fast onboarding",
                 description: "Talent available within 5–7 business days",
-                icon: <Zap className="h-10 w-10" />
+                icon: <Zap className="h-8 w-8" />
               },
               {
                 title: "Flexible contracts",
                 description: "Scale up or down as needed",
-                icon: <Users className="h-10 w-10" />
+                icon: <Users className="h-8 w-8" />
               },
               {
                 title: "Rigorous screening",
                 description: "Technical, communication, and cultural fit",
-                icon: <Shield className="h-10 w-10" />
+                icon: <Shield className="h-8 w-8" />
               },
               {
                 title: "Continuous support",
                 description: "From sourcing to reporting, we stay involved",
-                icon: <CheckCircle className="h-10 w-10" />
+                icon: <Award className="h-8 w-8" />
               }
             ].map((feature, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 className="text-center group"
               >
-                <div className="bg-purple-100 dark:bg-purple-900 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-8 group-hover:scale-125 transition-transform duration-500 shadow-lg">
-                  <div className="text-purple-600 dark:text-purple-400">
+                <div className="bg-primary/10 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-500">
+                  <div className="text-primary">
                     {feature.icon}
                   </div>
                 </div>
-                <h3 className="text-2xl font-black text-amber-900 dark:text-amber-100 mb-4">
+                <h3 className="text-xl font-bold text-foreground mb-4">
                   {feature.title}
                 </h3>
-                <p className="text-amber-700 dark:text-amber-300 text-lg leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed">
                   {feature.description}
                 </p>
               </motion.div>
@@ -492,21 +496,21 @@ const Index = () => {
       </section>
 
       {/* Testimonials */}
-      <section id="testimonials" className="section-padding bg-gradient-to-br from-purple-50 to-amber-50 dark:from-purple-950/50 dark:to-amber-950/50">
+      <section id="testimonials" className="section-padding bg-background">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             className="text-center mb-20"
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-5xl md:text-7xl font-black text-amber-900 dark:text-amber-100 mb-8 leading-tight">
+            <h2 className="text-headline mb-6">
               What Our Clients Say
             </h2>
           </motion.div>
 
-          <div className="relative max-w-5xl mx-auto">
+          <div className="relative max-w-4xl mx-auto">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentTestimonial}
@@ -516,21 +520,21 @@ const Index = () => {
                 transition={{ duration: 0.6 }}
                 className="text-center"
               >
-                <Card className="elegant-card shadow-2xl">
-                  <CardContent className="p-16">
+                <Card className="card-feature">
+                  <CardContent className="p-12">
                     <div className="flex justify-center mb-8">
                       {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
-                        <Star key={i} className="h-8 w-8 text-yellow-400 fill-current" />
+                        <Star key={i} className="h-6 w-6 text-yellow-500 fill-current" />
                       ))}
                     </div>
-                    <blockquote className="text-2xl md:text-4xl text-amber-900 dark:text-amber-100 mb-10 leading-relaxed font-medium italic">
+                    <blockquote className="text-body-large text-foreground mb-8 leading-relaxed italic">
                       "{testimonials[currentTestimonial].text}"
                     </blockquote>
                     <div>
-                      <p className="text-2xl font-black text-amber-900 dark:text-amber-100">
+                      <p className="text-lg font-bold text-foreground">
                         {testimonials[currentTestimonial].author}
                       </p>
-                      <p className="text-xl text-purple-600 dark:text-purple-400 font-semibold">
+                      <p className="text-muted-foreground font-medium">
                         {testimonials[currentTestimonial].role}
                       </p>
                     </div>
@@ -539,22 +543,22 @@ const Index = () => {
               </motion.div>
             </AnimatePresence>
 
-            <div className="flex justify-center mt-10 space-x-6">
+            <div className="flex justify-center mt-8 space-x-4">
               <Button
                 variant="outline"
                 size="lg"
                 onClick={prevTestimonial}
-                className="p-4 border-2 border-amber-300 dark:border-amber-700 hover:bg-amber-100 dark:hover:bg-amber-900"
+                className="p-3 border-border hover:bg-muted rounded-full"
               >
-                <ChevronLeft className="h-6 w-6" />
+                <ChevronLeft className="h-5 w-5" />
               </Button>
               <Button
                 variant="outline"
                 size="lg"
                 onClick={nextTestimonial}
-                className="p-4 border-2 border-amber-300 dark:border-amber-700 hover:bg-amber-100 dark:hover:bg-amber-900"
+                className="p-3 border-border hover:bg-muted rounded-full"
               >
-                <ChevronRight className="h-6 w-6" />
+                <ChevronRight className="h-5 w-5" />
               </Button>
             </div>
           </div>
@@ -562,30 +566,30 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section id="contact" className="section-padding warm-gradient-bg">
+      <section id="contact" className="section-padding gradient-warm dark:gradient-warm-dark">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-20 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 1 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-6xl font-black text-amber-900 dark:text-amber-100 mb-8 leading-tight">
+              <h2 className="text-headline mb-8">
                 Add the Right People to Your Team Without the Hiring Delay
               </h2>
-              <p className="text-xl text-amber-700 dark:text-amber-300 mb-10 leading-relaxed font-medium">
+              <p className="text-body-large text-muted-foreground mb-10">
                 Kombee simplifies team expansion with reliable, flexible staffing. Focus on building — we'll handle the resourcing.
               </p>
-              <div className="space-y-6 text-amber-700 dark:text-amber-300">
+              <div className="space-y-4 text-muted-foreground">
                 {[
                   "5-7 day onboarding process",
                   "Pre-vetted senior professionals",
                   "Flexible engagement models",
                   "Ongoing support & management"
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center text-lg">
-                    <CheckCircle className="h-6 w-6 text-green-500 mr-4 flex-shrink-0" />
+                  <div key={index} className="flex items-center">
+                    <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
                     <span className="font-medium">{item}</span>
                   </div>
                 ))}
@@ -598,47 +602,47 @@ const Index = () => {
               transition={{ duration: 1 }}
               viewport={{ once: true }}
             >
-              <Card className="elegant-card shadow-2xl">
-                <CardContent className="p-10">
-                  <h3 className="text-3xl font-black text-amber-900 dark:text-amber-100 mb-8">
+              <Card className="card-feature">
+                <CardContent className="p-8">
+                  <h3 className="text-2xl font-bold text-foreground mb-8">
                     Get Started Today
                   </h3>
-                  <form onSubmit={handleSubmit} className="space-y-8">
-                    <div className="grid md:grid-cols-2 gap-6">
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-4">
                       <Input
                         placeholder="First Name"
-                        className="border-2 border-amber-300 dark:border-amber-700 focus:border-purple-500 h-14 text-lg"
+                        className="border-border focus:border-primary h-12"
                         required
                       />
                       <Input
                         placeholder="Last Name"
-                        className="border-2 border-amber-300 dark:border-amber-700 focus:border-purple-500 h-14 text-lg"
+                        className="border-border focus:border-primary h-12"
                         required
                       />
                     </div>
                     <Input
                       type="email"
                       placeholder="Work Email"
-                      className="border-2 border-amber-300 dark:border-amber-700 focus:border-purple-500 h-14 text-lg"
+                      className="border-border focus:border-primary h-12"
                       required
                     />
                     <Input
                       placeholder="Company Name"
-                      className="border-2 border-amber-300 dark:border-amber-700 focus:border-purple-500 h-14 text-lg"
+                      className="border-border focus:border-primary h-12"
                       required
                     />
                     <Textarea
                       placeholder="Tell us about your project and team needs..."
-                      className="border-2 border-amber-300 dark:border-amber-700 focus:border-purple-500 min-h-[150px] text-lg"
+                      className="border-border focus:border-primary min-h-[120px]"
                       required
                     />
                     <Button
                       type="submit"
                       size="lg"
-                      className="w-full bg-purple-600 hover:bg-purple-700 text-white py-6 text-xl font-bold group shadow-xl hover:shadow-2xl transition-all duration-300"
+                      className="btn-primary w-full text-lg group"
                     >
                       Consult Now
-                      <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
+                      <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </form>
                 </CardContent>
@@ -649,44 +653,44 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-amber-900 dark:bg-amber-950 text-amber-100 py-16">
+      <footer className="bg-primary text-primary-foreground py-16">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-12">
             <div>
-              <h3 className="text-3xl font-black mb-6">Kombee</h3>
-              <p className="text-amber-200 text-lg leading-relaxed">
+              <h3 className="text-2xl font-black mb-6">Kombee</h3>
+              <p className="text-primary-foreground/80 leading-relaxed">
                 Connecting teams with vetted tech professionals worldwide.
               </p>
             </div>
             <div>
-              <h4 className="font-bold mb-6 text-xl">Services</h4>
-              <ul className="space-y-3 text-amber-200">
-                <li><a href="#" className="hover:text-white transition-colors text-lg">Developers</a></li>
-                <li><a href="#" className="hover:text-white transition-colors text-lg">Designers</a></li>
-                <li><a href="#" className="hover:text-white transition-colors text-lg">Analysts</a></li>
-                <li><a href="#" className="hover:text-white transition-colors text-lg">Project Managers</a></li>
+              <h4 className="font-bold mb-6 text-lg">Services</h4>
+              <ul className="space-y-3 text-primary-foreground/80">
+                <li><a href="#" className="hover:text-primary-foreground transition-colors">Developers</a></li>
+                <li><a href="#" className="hover:text-primary-foreground transition-colors">Designers</a></li>
+                <li><a href="#" className="hover:text-primary-foreground transition-colors">Analysts</a></li>
+                <li><a href="#" className="hover:text-primary-foreground transition-colors">Project Managers</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-bold mb-6 text-xl">Company</h4>
-              <ul className="space-y-3 text-amber-200">
-                <li><a href="#" className="hover:text-white transition-colors text-lg">About</a></li>
-                <li><a href="#" className="hover:text-white transition-colors text-lg">Careers</a></li>
-                <li><a href="#" className="hover:text-white transition-colors text-lg">Contact</a></li>
-                <li><a href="#" className="hover:text-white transition-colors text-lg">Blog</a></li>
+              <h4 className="font-bold mb-6 text-lg">Company</h4>
+              <ul className="space-y-3 text-primary-foreground/80">
+                <li><a href="#" className="hover:text-primary-foreground transition-colors">About</a></li>
+                <li><a href="#" className="hover:text-primary-foreground transition-colors">Careers</a></li>
+                <li><a href="#" className="hover:text-primary-foreground transition-colors">Contact</a></li>
+                <li><a href="#" className="hover:text-primary-foreground transition-colors">Blog</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-bold mb-6 text-xl">Contact</h4>
-              <ul className="space-y-3 text-amber-200 text-lg">
+              <h4 className="font-bold mb-6 text-lg">Contact</h4>
+              <ul className="space-y-3 text-primary-foreground/80">
                 <li>hello@kombee.com</li>
                 <li>+1 (555) 123-4567</li>
                 <li>San Francisco, CA</li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-amber-800 mt-12 pt-8 text-center text-amber-200">
-            <p className="text-lg">&copy; 2024 Kombee. All rights reserved.</p>
+          <div className="border-t border-primary-foreground/20 mt-12 pt-8 text-center text-primary-foreground/80">
+            <p>&copy; 2024 Kombee. All rights reserved.</p>
           </div>
         </div>
       </footer>
