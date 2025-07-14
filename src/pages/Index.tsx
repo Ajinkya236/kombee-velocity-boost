@@ -534,7 +534,7 @@ const Index = () => {
                           className="group"
                           whileHover={{ y: -10 }}
                         >
-                          <Card className="card-modern h-full group-hover:shadow-2xl overflow-hidden" style={{ backgroundColor: '#24180e', border: '1px solid #d8cdce' }}>
+                          <Card className="card-modern h-full group-hover:shadow-2xl overflow-hidden" style={{ backgroundColor: '#171311', border: '1px solid #d8cdce' }}>
                             <div className="aspect-video overflow-hidden">
                               <img 
                                 src={role.image}
@@ -542,7 +542,7 @@ const Index = () => {
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                               />
                             </div>
-                            <CardContent className="p-4 sm:p-6">
+                            <CardContent className="p-4 sm:p-6" style={{ backgroundColor: '#171311' }}>
                               <div className="flex items-center justify-between mb-4 sm:mb-6">
                                 <div className="group-hover:scale-110 transition-transform duration-300" style={{ color: '#d8cdce' }}>
                                   {role.icon}
