@@ -49,12 +49,17 @@ const Index = () => {
   useEffect(() => {
     const controlNavbar = () => {
       if (typeof window !== 'undefined') {
-        if (window.scrollY > lastScrollY && window.scrollY > 100) {
+        const currentScrollY = window.scrollY;
+        
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          // Scrolling down
           setIsNavVisible(false);
-        } else {
+        } else if (currentScrollY < lastScrollY) {
+          // Scrolling up
           setIsNavVisible(true);
         }
-        setLastScrollY(window.scrollY);
+        
+        setLastScrollY(currentScrollY);
       }
     };
 
@@ -232,21 +237,21 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen transition-colors duration-500 dark">
+    <div className="min-h-screen transition-colors duration-500 dark" style={{ fontFamily: 'Calibre, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', fontWeight: '100' }}>
       {/* Navigation */}
       <motion.nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isNavVisible ? 'translate-y-0' : '-translate-y-full'
-        }`}
-        style={{ backgroundColor: '#f5c8a2' }}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        style={{ backgroundColor: '#d8cdce' }}
+        initial={{ y: 0 }}
+        animate={{ y: isNavVisible ? 0 : '-100%' }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <motion.div 
-            className="text-3xl font-black tracking-tight"
+            className="text-3xl tracking-tight"
             style={{ 
               fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+              fontWeight: '900',
               color: '#24180e'
             }}
             whileHover={{ scale: 1.05 }}
@@ -283,20 +288,33 @@ const Index = () => {
           style={{ opacity: heroOpacity, scale: heroScale }}
         >
           <motion.h1
-            className="text-display mb-8 text-white"
+            className="text-white mb-8"
+            style={{
+              fontSize: 'clamp(2.5rem, 8vw, 6rem)',
+              lineHeight: '0.9',
+              letterSpacing: '-0.02em',
+              fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+              fontWeight: '900'
+            }}
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.2 }}
           >
             Scale Your Team with{' '}
-            <span className="text-white font-black">
+            <span className="text-white" style={{ fontWeight: '900' }}>
               Kombee's
             </span>{' '}
             Vetted Experts
           </motion.h1>
           
           <motion.p
-            className="text-subheadline mb-12 max-w-4xl mx-auto text-white/90"
+            className="text-white/90 mb-12 max-w-4xl mx-auto"
+            style={{
+              fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
+              lineHeight: '1.4',
+              fontFamily: 'Calibre, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+              fontWeight: '100'
+            }}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.6 }}
@@ -313,6 +331,7 @@ const Index = () => {
             <Button
               size="lg"
               className="btn-primary text-lg group"
+              style={{ fontFamily: 'Calibre, sans-serif', fontWeight: '100' }}
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
             >
               Get Started Now
@@ -322,8 +341,12 @@ const Index = () => {
             <Button
               variant="outline"
               size="lg"
-              className="text-lg group border-white/30 hover:bg-white/10 bg-white/90 hover:text-amber-800 font-semibold"
-              style={{ color: '#8B4513' }}
+              className="text-lg group border-white/30 hover:bg-white/10 bg-white/90 hover:text-amber-800"
+              style={{ 
+                color: '#8B4513',
+                fontFamily: 'Calibre, sans-serif',
+                fontWeight: '100'
+              }}
             >
               <Play className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform" />
               Watch Demo
@@ -344,7 +367,7 @@ const Index = () => {
       </section>
 
       {/* Challenges Section */}
-      <section id="challenges" className="py-32 lg:py-40" style={{ backgroundColor: '#f5c8a2' }}>
+      <section id="challenges" className="py-32 lg:py-40" style={{ backgroundColor: '#24180e' }}>
         <div className="max-w-7xl mx-auto px-6">
           {/* Section Header */}
           <motion.div
@@ -354,16 +377,34 @@ const Index = () => {
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-6xl md:text-7xl font-black mb-8 leading-tight tracking-tight" style={{ color: '#24180e' }}>
+            <h2 className="mb-8 leading-tight tracking-tight" 
+                style={{ 
+                  fontSize: 'clamp(3rem, 8vw, 4.5rem)',
+                  fontFamily: 'Inter, sans-serif', 
+                  fontWeight: '900',
+                  color: '#d8cdce' 
+                }}>
               Flexible Tech Hiring
             </h2>
-            <p className="text-4xl md:text-5xl font-black mb-6 leading-tight tracking-tight" style={{ color: '#24180e' }}>
+            <p className="mb-6 leading-tight tracking-tight" 
+               style={{ 
+                 fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+                 fontFamily: 'Inter, sans-serif', 
+                 fontWeight: '900',
+                 color: '#d8cdce' 
+               }}>
               Delivery Pods
             </p>
-            <p className="text-4xl md:text-5xl font-black mb-12 leading-tight tracking-tight" style={{ color: '#24180e' }}>
+            <p className="mb-12 leading-tight tracking-tight" 
+               style={{ 
+                 fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+                 fontFamily: 'Inter, sans-serif', 
+                 fontWeight: '900',
+                 color: '#d8cdce' 
+               }}>
               Plug-and-Play Talent
             </p>
-            <div className="w-32 h-1.5 mx-auto rounded-full" style={{ backgroundColor: '#24180e' }}></div>
+            <div className="w-32 h-1.5 mx-auto rounded-full" style={{ backgroundColor: '#d8cdce' }}></div>
           </motion.div>
 
           {/* Challenge Navigation Menu */}
@@ -384,7 +425,7 @@ const Index = () => {
                       : 'hover:bg-white/50'
                   }`}
                   style={{ 
-                    backgroundColor: activeChallengeIndex === index ? '#24180e' : 'rgba(255,255,255,0.3)'
+                    backgroundColor: activeChallengeIndex === index ? '#d8cdce' : 'rgba(255,255,255,0.3)'
                   }}
                   onClick={() => {
                     const element = document.querySelector(`[data-challenge-index="${index}"]`);
@@ -411,12 +452,22 @@ const Index = () => {
               >
                 <div className={`space-y-8 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
                   <div>
-                    <h3 className="text-4xl md:text-5xl font-black mb-6 tracking-tight" 
-                        style={{ fontFamily: 'Inter, sans-serif', color: '#24180e' }}>
+                    <h3 className="mb-6 tracking-tight" 
+                        style={{ 
+                          fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+                          fontFamily: 'Inter, sans-serif', 
+                          fontWeight: '900',
+                          color: '#d8cdce' 
+                        }}>
                       {challenge.problem}
                     </h3>
-                    <p className="text-2xl md:text-2xl font-bold leading-relaxed tracking-tight" 
-                       style={{ fontFamily: 'Inter, sans-serif', color: '#24180e' }}>
+                    <p className="leading-relaxed tracking-tight" 
+                       style={{ 
+                         fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+                         fontFamily: 'Inter, sans-serif', 
+                         fontWeight: '900',
+                         color: '#d8cdce' 
+                       }}>
                       {challenge.solution}
                     </p>
                   </div>
@@ -437,7 +488,7 @@ const Index = () => {
       </section>
 
       {/* Roles Section with Carousel */}
-      <section id="roles" className="section-padding bg-background">
+      <section id="roles" className="section-padding" style={{ backgroundColor: '#d8cdce' }}>
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             className="text-center mb-20"
@@ -446,10 +497,21 @@ const Index = () => {
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-5xl font-black text-foreground mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <h2 className="mb-6" 
+                style={{ 
+                  fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+                  fontFamily: 'Inter, sans-serif',
+                  fontWeight: '900',
+                  color: '#24180e'
+                }}>
               Top-Tier Tech Talent Available On Demand
             </h2>
-            <p className="text-2xl font-black text-foreground" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <p style={{ 
+                 fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+                 fontFamily: 'Inter, sans-serif',
+                 fontWeight: '900',
+                 color: '#24180e'
+               }}>
               Roles You Can Hire Through Kombee
             </p>
           </motion.div>
@@ -473,7 +535,7 @@ const Index = () => {
                           viewport={{ once: true }}
                           className="group"
                         >
-                          <Card className="card-modern h-full group-hover:shadow-2xl overflow-hidden">
+                          <Card className="card-modern h-full group-hover:shadow-2xl overflow-hidden" style={{ backgroundColor: '#24180e', border: '1px solid #d8cdce' }}>
                             <div className="aspect-video overflow-hidden">
                               <img 
                                 src={role.image}
@@ -483,23 +545,31 @@ const Index = () => {
                             </div>
                             <CardContent className="p-6">
                               <div className="flex items-center justify-between mb-6">
-                                <div className="text-primary group-hover:scale-110 transition-transform duration-300">
+                                <div className="group-hover:scale-110 transition-transform duration-300" style={{ color: '#d8cdce' }}>
                                   {role.icon}
                                 </div>
-                                <Badge variant="secondary" className="bg-muted text-muted-foreground font-semibold">
+                                <Badge variant="secondary" className="font-semibold" style={{ backgroundColor: '#d8cdce', color: '#24180e' }}>
                                   {role.experience}
                                 </Badge>
                               </div>
-                              <h3 className="text-lg font-black text-foreground mb-4 group-hover:text-primary transition-colors" 
-                                  style={{ fontFamily: 'Inter, sans-serif' }}>
+                              <h3 className="text-lg mb-4 group-hover:text-primary transition-colors" 
+                                  style={{ 
+                                    fontFamily: 'Inter, sans-serif',
+                                    fontWeight: '900',
+                                    color: '#d8cdce'
+                                  }}>
                                 {role.title}
                               </h3>
-                              <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
+                              <p className="mb-6 text-sm leading-relaxed" style={{ 
+                                   fontFamily: 'Calibre, sans-serif',
+                                   fontWeight: '100',
+                                   color: '#d8cdce'
+                                 }}>
                                 {role.description}
                               </p>
                               <div className="flex flex-wrap gap-2">
                                 {role.skills.map((skill, skillIndex) => (
-                                  <Badge key={skillIndex} variant="outline" className="text-xs border-border/50">
+                                  <Badge key={skillIndex} variant="outline" className="text-xs" style={{ borderColor: '#d8cdce', color: '#d8cdce' }}>
                                     {skill}
                                   </Badge>
                                 ))}
@@ -520,7 +590,8 @@ const Index = () => {
                 variant="outline"
                 size="lg"
                 onClick={prevRole}
-                className="p-3 border-border hover:bg-muted rounded-full"
+                className="p-3 rounded-full"
+                style={{ borderColor: '#24180e', color: '#24180e', backgroundColor: 'transparent' }}
               >
                 <ChevronLeft className="h-5 w-5" />
               </Button>
@@ -532,9 +603,12 @@ const Index = () => {
                     key={index}
                     className={`w-3 h-3 rounded-full transition-all duration-300 ${
                       currentRoleSlide === index 
-                        ? 'bg-primary scale-125' 
-                        : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                        ? 'scale-125' 
+                        : 'hover:opacity-70'
                     }`}
+                    style={{ 
+                      backgroundColor: currentRoleSlide === index ? '#24180e' : 'rgba(36, 24, 14, 0.3)'
+                    }}
                     onClick={() => setCurrentRoleSlide(index)}
                   />
                 ))}
@@ -544,7 +618,8 @@ const Index = () => {
                 variant="outline"
                 size="lg"
                 onClick={nextRole}
-                className="p-3 border-border hover:bg-muted rounded-full"
+                className="p-3 rounded-full"
+                style={{ borderColor: '#24180e', color: '#24180e', backgroundColor: 'transparent' }}
               >
                 <ChevronRight className="h-5 w-5" />
               </Button>
@@ -553,66 +628,147 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Why Choose Us */}
-      <section className="section-padding gradient-warm dark:gradient-warm-dark">
+      {/* Why Choose Us - Redesigned based on reference image */}
+      <section className="section-padding" style={{ backgroundColor: '#24180e' }}>
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
-            className="text-center mb-20"
+            className="grid lg:grid-cols-2 gap-16 items-stretch"
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-headline mb-6">
-              Why Companies Choose Kombee
-            </h2>
+            {/* Left side - Main content */}
+            <div className="space-y-8">
+              <div>
+                <h2 className="mb-8 leading-tight"
+                    style={{
+                      fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+                      fontFamily: 'Inter, sans-serif',
+                      fontWeight: '900',
+                      color: '#d8cdce'
+                    }}>
+                  We stand behind our results
+                </h2>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                {[
+                  {
+                    title: "Accuracy first",
+                    description: "Your team trains our AI robots to handle tasks your way, with fail-safe systems to prevent mistakes",
+                    icon: <Target className="h-8 w-8" />
+                  },
+                  {
+                    title: "Results driven",
+                    description: "Your return on investment is how we measure success — delivering real value to your bottom line",
+                    icon: <TrendingUp className="h-8 w-8" />
+                  },
+                  {
+                    title: "Money back guarantee",
+                    description: "We back our commitment to your success with a full refund guarantee if you're not satisfied",
+                    icon: <Shield className="h-8 w-8" />
+                  },
+                  {
+                    title: "Industry expertise",
+                    description: "Built for food and beverage wholesalers by experts with deep industry knowledge",
+                    icon: <Award className="h-8 w-8" />
+                  }
+                ].map((feature, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="space-y-4"
+                  >
+                    <div style={{ color: '#d8cdce' }}>
+                      {feature.icon}
+                    </div>
+                    <h3 className="text-xl leading-tight"
+                        style={{
+                          fontFamily: 'Inter, sans-serif',
+                          fontWeight: '900',
+                          color: '#d8cdce'
+                        }}>
+                      {feature.title}
+                    </h3>
+                    <p className="leading-relaxed"
+                       style={{
+                         fontFamily: 'Calibre, sans-serif',
+                         fontWeight: '100',
+                         color: '#d8cdce'
+                       }}>
+                      {feature.description}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right side - Image */}
+            <div className="relative">
+              <div className="aspect-[4/3] rounded-3xl overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                  alt="Professional working"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+          {/* Stats Section */}
+          <motion.div
+            className="grid md:grid-cols-3 gap-12 mt-20 pt-20 border-t"
+            style={{ borderColor: '#d8cdce' }}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
             {[
               {
-                title: "Fast onboarding",
-                description: "Talent available within 5–7 business days",
-                icon: <Zap className="h-8 w-8" />
+                stat: "90%",
+                description: "reduction in manual work"
               },
               {
-                title: "Flexible contracts",
-                description: "Scale up or down as needed",
-                icon: <Users className="h-8 w-8" />
+                stat: "99.9%",
+                description: "accuracy with fail-safe systems"
               },
               {
-                title: "Rigorous screening",
-                description: "Technical, communication, and cultural fit",
-                icon: <Shield className="h-8 w-8" />
-              },
-              {
-                title: "Continuous support",
-                description: "From sourcing to reporting, we stay involved",
-                icon: <Award className="h-8 w-8" />
+                stat: "24,650+",
+                description: "hours saved by our wholesalers in the last month"
               }
-            ].map((feature, index) => (
+            ].map((item, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 60 }}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="text-center group"
+                className="text-center"
               >
-                <div className="bg-primary/10 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-500">
-                  <div className="text-primary">
-                    {feature.icon}
-                  </div>
+                <div className="mb-4"
+                     style={{
+                       fontSize: 'clamp(3rem, 8vw, 4rem)',
+                       fontFamily: 'Inter, sans-serif',
+                       fontWeight: '900',
+                       color: '#d8cdce'
+                     }}>
+                  {item.stat}
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-4">
-                  {feature.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {feature.description}
+                <p style={{
+                     fontFamily: 'Calibre, sans-serif',
+                     fontWeight: '100',
+                     color: '#d8cdce'
+                   }}>
+                  {item.description}
                 </p>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -626,7 +782,13 @@ const Index = () => {
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-headline mb-6">
+            <h2 className="mb-6"
+                style={{
+                  fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+                  fontFamily: 'Inter, sans-serif',
+                  fontWeight: '900',
+                  color: '#d8cdce'
+                }}>
               What Our Clients Say
             </h2>
           </motion.div>
@@ -641,21 +803,36 @@ const Index = () => {
                 transition={{ duration: 0.6 }}
                 className="text-center"
               >
-                <Card className="card-feature">
+                <Card className="card-feature" style={{ backgroundColor: '#24180e', border: '1px solid #d8cdce' }}>
                   <CardContent className="p-12">
                     <div className="flex justify-center mb-8">
                       {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
                         <Star key={i} className="h-6 w-6 text-yellow-500 fill-current" />
                       ))}
                     </div>
-                    <blockquote className="text-body-large text-foreground mb-8 leading-relaxed italic">
+                    <blockquote className="mb-8 leading-relaxed italic text-lg"
+                               style={{
+                                 fontFamily: 'Calibre, sans-serif',
+                                 fontWeight: '100',
+                                 color: '#d8cdce'
+                               }}>
                       "{testimonials[currentTestimonial].text}"
                     </blockquote>
                     <div>
-                      <p className="text-lg font-bold text-foreground">
+                      <p className="text-lg font-bold"
+                         style={{
+                           fontFamily: 'Inter, sans-serif',
+                           fontWeight: '900',
+                           color: '#d8cdce'
+                         }}>
                         {testimonials[currentTestimonial].author}
                       </p>
-                      <p className="text-muted-foreground font-medium">
+                      <p className="font-medium"
+                         style={{
+                           fontFamily: 'Calibre, sans-serif',
+                           fontWeight: '100',
+                           color: '#d8cdce'
+                         }}>
                         {testimonials[currentTestimonial].role}
                       </p>
                     </div>
@@ -669,7 +846,8 @@ const Index = () => {
                 variant="outline"
                 size="lg"
                 onClick={prevTestimonial}
-                className="p-3 border-border hover:bg-muted rounded-full"
+                className="p-3 rounded-full"
+                style={{ borderColor: '#d8cdce', color: '#d8cdce', backgroundColor: 'transparent' }}
               >
                 <ChevronLeft className="h-5 w-5" />
               </Button>
@@ -677,7 +855,8 @@ const Index = () => {
                 variant="outline"
                 size="lg"
                 onClick={nextTestimonial}
-                className="p-3 border-border hover:bg-muted rounded-full"
+                className="p-3 rounded-full"
+                style={{ borderColor: '#d8cdce', color: '#d8cdce', backgroundColor: 'transparent' }}
               >
                 <ChevronRight className="h-5 w-5" />
               </Button>
@@ -687,7 +866,7 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section id="contact" className="section-padding gradient-warm dark:gradient-warm-dark">
+      <section id="contact" className="section-padding" style={{ backgroundColor: '#d8cdce' }}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -696,13 +875,24 @@ const Index = () => {
               transition={{ duration: 1 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-headline mb-8">
+              <h2 className="mb-8"
+                  style={{
+                    fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+                    fontFamily: 'Inter, sans-serif',
+                    fontWeight: '900',
+                    color: '#24180e'
+                  }}>
                 Add the Right People to Your Team Without the Hiring Delay
               </h2>
-              <p className="text-body-large text-muted-foreground mb-10">
+              <p className="mb-10 text-lg"
+                 style={{
+                   fontFamily: 'Calibre, sans-serif',
+                   fontWeight: '100',
+                   color: '#24180e'
+                 }}>
                 Kombee simplifies team expansion with reliable, flexible staffing. Focus on building — we'll handle the resourcing.
               </p>
-              <div className="space-y-4 text-muted-foreground">
+              <div className="space-y-4">
                 {[
                   "5-7 day onboarding process",
                   "Pre-vetted senior professionals",
@@ -711,7 +901,14 @@ const Index = () => {
                 ].map((item, index) => (
                   <div key={index} className="flex items-center">
                     <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                    <span className="font-medium">{item}</span>
+                    <span className="font-medium"
+                          style={{
+                            fontFamily: 'Calibre, sans-serif',
+                            fontWeight: '100',
+                            color: '#24180e'
+                          }}>
+                      {item}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -723,44 +920,90 @@ const Index = () => {
               transition={{ duration: 1 }}
               viewport={{ once: true }}
             >
-              <Card className="card-feature">
+              <Card className="card-feature" style={{ backgroundColor: '#24180e', border: '1px solid #d8cdce' }}>
                 <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold text-foreground mb-8">
+                  <h3 className="text-2xl font-bold mb-8"
+                      style={{
+                        fontFamily: 'Inter, sans-serif',
+                        fontWeight: '900',
+                        color: '#d8cdce'
+                      }}>
                     Get Started Today
                   </h3>
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-4">
                       <Input
                         placeholder="First Name"
-                        className="border-border focus:border-primary h-12"
+                        className="h-12"
+                        style={{ 
+                          borderColor: '#d8cdce', 
+                          backgroundColor: 'transparent',
+                          color: '#d8cdce',
+                          fontFamily: 'Calibre, sans-serif',
+                          fontWeight: '100'
+                        }}
                         required
                       />
                       <Input
                         placeholder="Last Name"
-                        className="border-border focus:border-primary h-12"
+                        className="h-12"
+                        style={{ 
+                          borderColor: '#d8cdce', 
+                          backgroundColor: 'transparent',
+                          color: '#d8cdce',
+                          fontFamily: 'Calibre, sans-serif',
+                          fontWeight: '100'
+                        }}
                         required
                       />
                     </div>
                     <Input
                       type="email"
                       placeholder="Work Email"
-                      className="border-border focus:border-primary h-12"
+                      className="h-12"
+                      style={{ 
+                        borderColor: '#d8cdce', 
+                        backgroundColor: 'transparent',
+                        color: '#d8cdce',
+                        fontFamily: 'Calibre, sans-serif',
+                        fontWeight: '100'
+                      }}
                       required
                     />
                     <Input
                       placeholder="Company Name"
-                      className="border-border focus:border-primary h-12"
+                      className="h-12"
+                      style={{ 
+                        borderColor: '#d8cdce', 
+                        backgroundColor: 'transparent',
+                        color: '#d8cdce',
+                        fontFamily: 'Calibre, sans-serif',
+                        fontWeight: '100'
+                      }}
                       required
                     />
                     <Textarea
                       placeholder="Tell us about your project and team needs..."
-                      className="border-border focus:border-primary min-h-[120px]"
+                      className="min-h-[120px]"
+                      style={{ 
+                        borderColor: '#d8cdce', 
+                        backgroundColor: 'transparent',
+                        color: '#d8cdce',
+                        fontFamily: 'Calibre, sans-serif',
+                        fontWeight: '100'
+                      }}
                       required
                     />
                     <Button
                       type="submit"
                       size="lg"
-                      className="btn-primary w-full text-lg group"
+                      className="w-full text-lg group"
+                      style={{ 
+                        backgroundColor: '#d8cdce', 
+                        color: '#24180e',
+                        fontFamily: 'Calibre, sans-serif',
+                        fontWeight: '100'
+                      }}
                     >
                       Consult Now
                       <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -774,43 +1017,88 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-primary text-primary-foreground py-16">
+      <footer className="py-16" style={{ backgroundColor: '#24180e', color: '#d8cdce' }}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-12">
             <div>
-              <h3 className="text-2xl font-black mb-6">Kombee</h3>
-              <p className="text-primary-foreground/80 leading-relaxed">
+              <h3 className="text-2xl mb-6"
+                  style={{
+                    fontFamily: 'Inter, sans-serif',
+                    fontWeight: '900'
+                  }}>
+                Kombee
+              </h3>
+              <p className="leading-relaxed"
+                 style={{
+                   fontFamily: 'Calibre, sans-serif',
+                   fontWeight: '100'
+                 }}>
                 Connecting teams with vetted tech professionals worldwide.
               </p>
             </div>
             <div>
-              <h4 className="font-bold mb-6 text-lg">Services</h4>
-              <ul className="space-y-3 text-primary-foreground/80">
-                <li><a href="#" className="hover:text-primary-foreground transition-colors">Developers</a></li>
-                <li><a href="#" className="hover:text-primary-foreground transition-colors">Designers</a></li>
-                <li><a href="#" className="hover:text-primary-foreground transition-colors">Analysts</a></li>
-                <li><a href="#" className="hover:text-primary-foreground transition-colors">Project Managers</a></li>
+              <h4 className="font-bold mb-6 text-lg"
+                  style={{
+                    fontFamily: 'Inter, sans-serif',
+                    fontWeight: '900'
+                  }}>
+                Services
+              </h4>
+              <ul className="space-y-3"
+                  style={{
+                    fontFamily: 'Calibre, sans-serif',
+                    fontWeight: '100'
+                  }}>
+                <li><a href="#" className="hover:opacity-80 transition-opacity">Developers</a></li>
+                <li><a href="#" className="hover:opacity-80 transition-opacity">Designers</a></li>
+                <li><a href="#" className="hover:opacity-80 transition-opacity">Analysts</a></li>
+                <li><a href="#" className="hover:opacity-80 transition-opacity">Project Managers</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-bold mb-6 text-lg">Company</h4>
-              <ul className="space-y-3 text-primary-foreground/80">
-                <li><a href="#" className="hover:text-primary-foreground transition-colors">About</a></li>
-                <li><a href="#" className="hover:text-primary-foreground transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-primary-foreground transition-colors">Contact</a></li>
-                <li><a href="#" className="hover:text-primary-foreground transition-colors">Blog</a></li>
+              <h4 className="font-bold mb-6 text-lg"
+                  style={{
+                    fontFamily: 'Inter, sans-serif',
+                    fontWeight: '900'
+                  }}>
+                Company
+              </h4>
+              <ul className="space-y-3"
+                  style={{
+                    fontFamily: 'Calibre, sans-serif',
+                    fontWeight: '100'
+                  }}>
+                <li><a href="#" className="hover:opacity-80 transition-opacity">About</a></li>
+                <li><a href="#" className="hover:opacity-80 transition-opacity">Careers</a></li>
+                <li><a href="#" className="hover:opacity-80 transition-opacity">Contact</a></li>
+                <li><a href="#" className="hover:opacity-80 transition-opacity">Blog</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-bold mb-6 text-lg">Contact</h4>
-              <ul className="space-y-3 text-primary-foreground/80">
+              <h4 className="font-bold mb-6 text-lg"
+                  style={{
+                    fontFamily: 'Inter, sans-serif',
+                    fontWeight: '900'
+                  }}>
+                Contact
+              </h4>
+              <ul className="space-y-3"
+                  style={{
+                    fontFamily: 'Calibre, sans-serif',
+                    fontWeight: '100'
+                  }}>
                 <li>hello@kombee.com</li>
                 <li>+1 (555) 123-4567</li>
                 <li>San Francisco, CA</li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-primary-foreground/20 mt-12 pt-8 text-center text-primary-foreground/80">
+          <div className="border-t mt-12 pt-8 text-center"
+               style={{ 
+                 borderColor: '#d8cdce',
+                 fontFamily: 'Calibre, sans-serif',
+                 fontWeight: '100'
+               }}>
             <p>&copy; 2024 Kombee. All rights reserved.</p>
           </div>
         </div>
